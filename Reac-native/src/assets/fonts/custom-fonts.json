@@ -1,0 +1,35 @@
+{
+    "Inter-Bold": {
+        "file": "./Inter-Bold.ttf"
+    },
+    "Roboto-Bold": {
+        "file": "./Roboto-Bold.ttf"
+    },
+    "Roboto-BoldItalic": {
+        "file": "./Roboto-BoldItalic.ttf"
+    },
+    "Roboto-Italic": {
+        "file": "./Roboto-Italic.ttf"
+    },
+    "Roboto-Medium": {
+        "file": "./Roboto-Medium.ttf"
+    },
+    "Roboto-MediumItalic": {
+        "file": "./Roboto-MediumItalic.ttf"
+    },
+    "Roboto-Regular": {
+        "file": "./Roboto-Regular.ttf"
+    },
+    "DancingScript-Bold": {
+        "file": "./DancingScript-Bold.ttf"
+    },
+    "DancingScript-Medium": {
+        "file": "./DancingScript-Medium.ttf"
+    },
+    "DancingScript-Regular": {
+        "file": "./DancingScript-Regular.ttf"
+    },
+    "DancingScript-SemiBold": {
+        "file": "./DancingScript-SemiBold.ttf"
+    }
+}

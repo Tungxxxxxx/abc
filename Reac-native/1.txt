@@ -1,0 +1,6 @@
+Lỗi: 
+import {Connect} => {connect} : undefined is not a function
+Khai báo reducer chung 1 file => tách 2 file : Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.
+import {Provider} from 'react-native' => 'react-redux':
+Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+Thiếu this.handle 

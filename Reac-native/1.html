@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <%--Datepicker--%> -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        //var dbDate = new Date(Date.now);
+        $('#rd1').datepicker({
+          showOtherMonths: true,
+          selectOtherMonths: true,
+          dateFormat: 'dd/mm/yy',
+        });
+      });
+      $(document).ready(function () {
+        $('#rd2').datepicker({
+          showOtherMonths: true,
+          selectOtherMonths: true,
+          dateFormat: 'dd/mm/yy',
+        });
+      });
+    </script>
+    <!-- <%--Datepicker--%> -->
+    <script language="javascript">
+      var kybc_text = new Array(
+        'Tùy ý',
+        'Quý 1',
+        '6 tháng',
+        '9 tháng',
+        'Cả năm',
+        'Tháng 1',
+        'Tháng 2',
+        'Tháng 3',
+        'Tháng 4',
+        'Tháng 5',
+        'Tháng 6',
+        'Tháng 7',
+        'Tháng 8',
+        'Tháng 9',
+        'Tháng 10',
+        'Tháng 11',
+        'Tháng 12',
+        'Quý 2',
+        'Quý 3',
+        'Quý 4',
+      );
+      var kybc_IDs = new Array(
+        '',
+        '01,03',
+        '01,6',
+        '01,9',
+        '01,12',
+        '01,01',
+        '02,02',
+        '03,03',
+        '04,04',
+        '05,05',
+        '06,06',
+        '07,07',
+        '08,08',
+        '09,09',
+        '10,10',
+        '11,11',
+        '12,12',
+        '04,06',
+        '07,09',
+        '10,12',
+      );
+      $(document).ready(() => {
+        let kybc = $('#kybc');
+        $.each(kybc_text, function (index, value) {
+          kybc.append($('<option></option>').text(value).val(index));
+        });
+      });
+    </script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div>
+          <span>
+            <span><i class="fas fa-sign-out" style="color: red"></i></span>
+            <span><i class="fa fa-home" style="color: red"></i></span>
+            <span>Tăng giảm TSCĐ vô hình</span>
+          </span>
+        </div>
+        <form style="width: 900px">
+          <i class="fa-solid fa-square-chevron-down fa-beat"></i>
+          <div class="container">
+            <div class="row">
+              <div class="col-2"><span>Kỳ báo cáo</span></div>
+              <div class="col d-flex flex-row">
+                <div style="width: 450px">
+                  <select id="kybc" class="form-select">
+                    <option value="1111111">aaaaa</option>
+                    <option value="1111111">bbbbbb</option>
+                    <option value="1111111">ccccc</option>
+                    <option value="1111111">ddđ</option>
+                    <option value="1111111">eeeee</option>
+                  </select>
+                </div>
+
+                <div class="input-group">
+                  <input type="text" id="rd1" class="form-control" />
+                  <span class="input-group-text"><i class="fa-solid fa-calendar-days input-group"></i></span>
+                </div>
+                <div class="input-group">
+                  <input type="text" id="rd2" class="form-control" />
+                  <i class="fa-solid fa-calendar-days input-group-text"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2"><span>Công ty</span></div>
+              <div class="col d-flex flex-row">
+                <div class="input-group">
+                  <input type="text" class="form-control" />
+                  <i class="fa-solid fa-angle-down input-group-text"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2"><span>Tổng cộng</span></div>
+              <div class="col d-flex flex-row">
+                <div class="input-group" style="justify-content: center">
+                  <input type="text" class="form-control" />
+                  <i class="fa-solid fa-angle-down input-group-text"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2"><span></span></div>
+            <div class="col d-flex flex-row">
+              <div class="input-group">
+                <span class="input-group-text">Page size</span>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="input-group">
+                <span class="input-group-text">Format</span>
+                <select class="form-select">
+                  <option value="0">HTML</option>
+                  <option value="1">Excel</option>
+                </select>
+              </div>
+              <div>
+                <i class="fa-solid fa-print"></i>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary">Run</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </header>
+      <main>
+        <section>
+          <div class="container">
+            <div>
+              <p>VI.10 THUYẾT MINH TĂNG GIẢM TSCĐ VÔ HÌNH</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <form id="bosfrm" name="bosfrm" action="Rpt.aspx" method="post">
+      <span class="hideprint"
+        ><a id="top"
+          >&nbsp;<img
+            name="menulogout"
+            id="menulogout"
+            src="../Img/LogOut.GIF"
+            alt="O"
+            onclick='window.location.replace("Default.Aspx");'
+            class="imgbtn"
+            border="0"
+            title="Logout" /></a
+        ><a href="#top" id="gotop" style="left: 1400px; top: 280px; position: fixed"></a>&nbsp;<img
+          name="menuhome"
+          id="menuhome"
+          src="../Img/Home.GIF"
+          alt="H"
+          onclick='window.location.replace("Home.Aspx");'
+          class="imgbtn"
+          border="0"
+          title="Go home" /><input
+          type="text"
+          name="finyear"
+          id="finyear"
+          value="2023"
+          readonly=""
+          style="width: 32px" />&nbsp; <input type="hidden" name="menuselect" id="menuselect" value="" /><input
+          class="actbid"
+          name="actb_menuselect"
+          id="actb_menuselect"
+          style="width: 234px"
+          value=""
+          autocomplete="off" /><img src="../img/Icon_Select.gif" class="imggo" onclick="actbinvoke(_menuselectactb);" />
+        <script language="javascript">
+          var _menuselectactb = new actb(
+            document.bosfrm.actb_menuselect,
+            actb_menuselect_text,
+            'document.bosfrm.menuselect.value=actb_menuselect_IDs[i];menusubmit();',
+          );
+        </script>
+        &nbsp;<img
+          name="help"
+          id="help"
+          src="../Img/HELP.GIF"
+          alt=""
+          onclick='window.location.assign("Rsa.aspx?Cmd=>Fr GetHelp&amp;MenuId="+ge("menuid").value);'
+          class="imgbtn"
+          border="0"
+          title="Help" /></span
+      ><span class="hideprint"
+        ><b><font color="blue">Tăng giảm TSCĐ vô hình</font></b></span
+      ><span class="hideprint">
+        <table>
+          <tbody>
+            <tr>
+              <td>Kỳ báo cáo</td>
+              <td nowrap="">
+                <script language="javascript">
+                  var actb_kybc_text = new Array(
+                    'Tùy ý',
+                    'Quý 1',
+                    '6 tháng',
+                    '9 tháng',
+                    'Cả năm',
+                    'Tháng 1',
+                    'Tháng 2',
+                    'Tháng 3',
+                    'Tháng 4',
+                    'Tháng 5',
+                    'Tháng 6',
+                    'Tháng 7',
+                    'Tháng 8',
+                    'Tháng 9',
+                    'Tháng 10',
+                    'Tháng 11',
+                    'Tháng 12',
+                    'Quý 2',
+                    'Quý 3',
+                    'Quý 4',
+                  );
+                  var actb_kybc_IDs = new Array(
+                    '',
+                    '01,03',
+                    '01,6',
+                    '01,9',
+                    '01,12',
+                    '01,01',
+                    '02,02',
+                    '03,03',
+                    '04,04',
+                    '05,05',
+                    '06,06',
+                    '07,07',
+                    '08,08',
+                    '09,09',
+                    '10,10',
+                    '11,11',
+                    '12,12',
+                    '04,06',
+                    '07,09',
+                    '10,12',
+                  );
+                </script>
+                <input type="hidden" name="kybc" id="kybc" value="01,12" />
+                <input
+                  class="actbid"
+                  name="actb_kybc"
+                  id="actb_kybc"
+                  style="width: 58px"
+                  value="Cả năm"
+                  autocomplete="off"
+                />
+                <img src="../img/Icon_Select.gif" class="imggo" onclick="actbinvoke(_kybcactb);" />
+                <script language="javascript">
+                  var _kybcactb = new actb(
+                    document.bosfrm.actb_kybc,
+                    actb_kybc_text,
+                    "document.bosfrm.kybc.value=actb_kybc_IDs[i];filldate('kybc');",
+                  );
+                </script>
+                <input name="rd1" id="rd1" size="8" maxlength="10" style="width: 68px" />
+                <input name="rd2" id="rd2" size="8" maxlength="10" style="width: 68px" />
+              </td>
+              <td><font style="color: red; background-color: yellow">*</font></td>
+            </tr>
+            <tr>
+              <td width="70px">Công ty</td>
+              <td nowrap="">
+                <input
+                  name="irc"
+                  id="irc"
+                  value=""
+                  style="width: 234px"
+                  onkeydown="if(isKey(event, 40)) uiddmh('irc', true)"
+                /><img src="../img/Icon_Select.gif" class="imggo" id="ircimg" onclick="uiddmh('irc')" />
+                <div
+                  id="irc_div"
+                  style="
+                    position: absolute;
+                    background: white;
+                    border: 1px solid rgb(204, 204, 204);
+                    display: none;
+                    height: 136px;
+                    width: 208px;
+                    overflow: auto;
+                    top: 65px;
+                    left: 78px;
+                  "
+                >
+                  <input
+                    type="checkbox"
+                    onchange="actbchanged('irc');"
+                    onclick="UIMultipleSelectAll(document.bosfrm,this,'irc_');uiddmhsel('irc')"
+                  />[CHECK ALL]<br />
+                  <input
+                    type="checkbox"
+                    onchange="actbchanged('irc');"
+                    name="irc_"
+                    onclick="uiddmhsel('irc')"
+                    value="31432"
+                  />COMPANY-PIA-CÔNG TY CỔ PHẦN TIN HỌC VIỄN THÔNG PETROLIMEX<br />
+                  <input
+                    type="checkbox"
+                    onchange="actbchanged('irc');"
+                    name="irc_"
+                    onclick="uiddmhsel('irc')"
+                    value="30946"
+                  />COMPANY-PIA0-VPCTY<br />
+                  <input
+                    type="checkbox"
+                    onchange="actbchanged('irc');"
+                    name="irc_"
+                    onclick="uiddmhsel('irc')"
+                    value="30948"
+                  />COMPANY-PIA1-CNMN<br />
+                  <input
+                    type="checkbox"
+                    onchange="actbchanged('irc');"
+                    name="irc_"
+                    onclick="uiddmhsel('irc')"
+                    value="39933"
+                  />COMPANY-PIA2-ĐƠN VỊ ĐIỀU CHỈNH PIACOM<br />
+                  <input
+                    type="checkbox"
+                    onchange="actbchanged('irc');"
+                    name="irc_"
+                    onclick="uiddmhsel('irc')"
+                    value="39669"
+                  />COMPANY-UBDT-UBDT<br />
+                  <input
+                    type="checkbox"
+                    onchange="actbchanged('irc');"
+                    name="irc_"
+                    onclick="uiddmhsel('irc')"
+                    value="40728"
+                  />COMPANY-UBND.TPHCM-UBND THÀNH PHỐ HỒ CHÍ MINH<br />
+                </div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Tổng hợp</td>
+              <td nowrap="">
+                <script language="javascript">
+                  var actb_tonghop_text = new Array('Không tổng hợp báo cáo', 'Tổng hợp báo cáo');
+                  var actb_tonghop_IDs = new Array('', '1');
+                </script>
+                <input type="hidden" name="tonghop" id="tonghop" value="" /><input
+                  class="actbid"
+                  name="actb_tonghop"
+                  id="actb_tonghop"
+                  style="width: 234px"
+                  value="Không tổng hợp báo cáo"
+                  autocomplete="off"
+                /><img src="../img/Icon_Select.gif" class="imggo" onclick="actbinvoke(_tonghopactb);" />
+                <script language="javascript">
+                  var _tonghopactb = new actb(
+                    document.bosfrm.actb_tonghop,
+                    actb_tonghop_text,
+                    "document.bosfrm.tonghop.value=actb_tonghop_IDs[i];actbchanged('actb_tonghop');",
+                  );
+                </script>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td align="right">
+                Page size<input
+                  name="pagesize"
+                  id="pagesize"
+                  value=""
+                  class="control"
+                  style="width: 28px; text-align: center"
+                  onchange="rptaction()"
+                />Format
+                <script language="javascript">
+                  var actb_format_text = new Array('HTML', 'Excel');
+                  var actb_format_IDs = new Array('1', '2');
+                </script>
+                <input type="hidden" name="format" id="format" value="1" /><input
+                  class="actbid"
+                  name="actb_format"
+                  id="actb_format"
+                  style="width: 36px"
+                  value="HTML"
+                  autocomplete="off"
+                /><img src="../img/Icon_Select.gif" class="imggo" onclick="actbinvoke(_formatactb);" />
+                <script language="javascript">
+                  var _formatactb = new actb(
+                    document.bosfrm.actb_format,
+                    actb_format_text,
+                    "document.bosfrm.format.value=actb_format_IDs[i];actbchanged('actb_format');",
+                  );
+                </script>
+                &nbsp;<img
+                  name="rptprint1"
+                  id="rptprint1"
+                  src="../Img/WZPRINT.BMP"
+                  alt="P"
+                  onclick="rptprint()"
+                  class="imgbtn"
+                  border="0"
+                  title="Ctrl+P - In báo cáo"
+                />&nbsp;<img
+                  name="rptaction1"
+                  id="rptaction1"
+                  src="../Img/Go.GIF"
+                  alt="A"
+                  onclick="rptaction()"
+                  class="imgbtn"
+                  border="0"
+                  title="Ctrl+Enter - Thực hiện báo cáo"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <input type="hidden" name="rptwidth" id="rptwidth" value="1000" />
+      </span>
+      <input type="hidden" name="menuid" id="menuid" value="" /><input
+        type="hidden"
+        name="rptid"
+        id="rptid"
+        value="9A3-B09-DN-V-10"
+      />
+      <script type="text/javascript">
+        emptychecklist = ['rd1', 'rd2'];
+        emptychecklistname = ['Từ ngày', 'Đến ngày'];
+        index = ',actb_kybc,rd1,rd2,actb_acct1,,';
+
+        index = ',actb_kybc,rd1,rd2,irc,,';
+        function rptsubmit() {
+          if (ge('rd1').value == '') {
+            alert('Từ ngày không được rỗng');
+            nextfocus('rd1');
+            return false;
+          }
+          if (ge('rd2').value == '') {
+            alert('Đến ngày không được rỗng');
+            nextfocus('rd2');
+            return false;
+          }
+          return true;
+        }
+        function link(s) {
+          if (s == '') return;
+          window.open('Tr.aspx?ID=' + s);
+        }
+        function onloadrpt() {
+          filldate('kybc');
+          nextfocus('actb_kybc');
+        }
+      </script>
+
+      <b>VI.10 THUYẾT MINH TĂNG GIẢM TSCĐ VÔ HÌNH</b>
+
+      <table
+        cellpadding="2"
+        cellspacing="0"
+        border="1"
+        style="border-collapse: collapse; font-size: 13px"
+        bordercolor="#999999"
+        width="1000"
+      >
+        <tbody>
+          <tr class="gridhdr">
+            <th valign="middle" align="left"><b>10. Tăng, giảm TSCĐ vô hình </b></th>
+            <th valign="middle"><b>Mã </b></th>
+            <th valign="middle">
+              <b
+                >Quyền sử<br />
+                dụng dất
+              </b>
+            </th>
+            <th valign="middle">
+              <b
+                >Quyền<br />
+                phát hành
+              </b>
+            </th>
+            <th valign="middle">
+              <b
+                >Bản quyền<br />
+                bằng sáng chế
+              </b>
+            </th>
+            <th valign="middle">
+              <b
+                >Nhãn hiệu<br />
+                tên thương mại
+              </b>
+            </th>
+            <th valign="middle">
+              <b
+                >Chương trình<br />
+                phần mềm
+              </b>
+            </th>
+            <th valign="middle">
+              <b
+                >Giấy phép &amp; GP<br />
+                nhượng quyền
+              </b>
+            </th>
+            <th valign="middle">
+              <b
+                >TSCĐ<br />
+                vô hình khác
+              </b>
+            </th>
+            <th valign="middle"><b>Tổng cộng </b></th>
+          </tr>
+          <tr>
+            <td><b>Nguyên giá</b></td>
+            <td><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+          </tr>
+          <tr class="basetabol">
+            <td><b>Số dư đầu năm</b></td>
+            <td><b>10</b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+          </tr>
+          <tr>
+            <td>- Mua trong năm</td>
+            <td>101</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr class="basetabol">
+            <td>- Tạo ra từ nội bộ doanh nghiệp</td>
+            <td>102</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr>
+            <td>- Tăng do hợp nhất kinh doanh</td>
+            <td>103</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr class="basetabol">
+            <td>- Tăng khác</td>
+            <td>104</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr>
+            <td>- Thanh lý, nhượng bán</td>
+            <td>105</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr class="basetabol">
+            <td>- Giảm khác</td>
+            <td>106</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr>
+            <td><b>Số dư cuối năm</b></td>
+            <td><b>20</b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+          </tr>
+          <tr class="basetabol">
+            <td><b>Giá trị hao mòn luỹ kế</b></td>
+            <td><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+          </tr>
+          <tr>
+            <td><b>Số dư đầu năm</b></td>
+            <td><b>30</b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+          </tr>
+          <tr class="basetabol">
+            <td>- Khấu hao trong năm</td>
+            <td>201</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr>
+            <td>- Tăng khác</td>
+            <td>202</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr class="basetabol">
+            <td>- Thanh lý, nhượng bán</td>
+            <td>203</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr>
+            <td>- Giảm khác</td>
+            <td>204</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr class="basetabol">
+            <td><b>Số dư cuối năm</b></td>
+            <td><b>40</b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+          </tr>
+          <tr>
+            <td><b>Giá trị còn lại</b></td>
+            <td><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+            <td align="right"><b></b></td>
+          </tr>
+          <tr class="basetabol">
+            <td>-Tại ngày đầu năm</td>
+            <td>50</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+          <tr>
+            <td>-Tại ngày cuối năm</td>
+            <td>60</td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+            <td align="right"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>
