@@ -46,7 +46,6 @@ class Login extends React.Component {
           value={username}
           onChangeText={(val) => {
             this.props.handleChangeUsername(val);
-            console.log(val);
           }}
         />
         <TextInput

@@ -17,7 +17,7 @@ class Route extends React.Component {
   render() {
     return (
       <NavigationContainer fallback={<></>}>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Main">
           <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="PayScreen" component={PayScreen} options={{ title: 'Thanh toán' }} />

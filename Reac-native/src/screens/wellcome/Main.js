@@ -18,22 +18,23 @@ import Signup from './Signup';
 //import connect để kết nối redux
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
+import { IP } from '../../common/Constant';
+import { connectSocketIO } from '../../redux/action/connectSocketIO';
+import { getLoginUser } from '../../redux/action/getLoginUser';
+var e;
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      pass: '',
+      users: [],
+      username: 'user1',
+      pass: '1',
       isLoading: false,
       page: 'LOG_IN',
-      bgHeader: [
-        require('../../assets/images/banners/online-shopping-on-mobile-phone.jpg'),
-        // require('../assets/images/tx2.jpg'),
-        // require('../assets/images/tx3.jpg'),
-        // require('../assets/images/tx4.jpeg'),
-      ],
-      currentIndex: 0,
+      bgHeader: require('../../assets/images/banners/online-shopping-on-mobile-phone.jpg'),
+      userLogin: {},
     };
+    e = this;
   }
 
   handleClickLogin = () => {
@@ -46,21 +47,8 @@ class Main extends React.Component {
       page: 'SIGN_UP',
     });
   };
-  componentDidMount() {
-    this.startImageCarousel();
-  }
-  startImageCarousel = () => {
-    setInterval(() => {
-      this.setState((prevState) => ({
-        currentIndex: (prevState.currentIndex + 1) % this.state.images.length,
-      }));
-    }, 1000); // 5 seconds
-  };
-  componentDidMount() {
-    setTimeout(() => {
-      Backgrounds.map((item, i) => {});
-    });
-  }
+
+  componentDidMount() {}
   handleClickSignup111 = () => {
     const { navigation } = this.props;
     navigation.navigate('Home');
@@ -77,6 +65,8 @@ class Main extends React.Component {
   };
 
   handleLogin = (username, pass) => {
+    console.log('username:', username);
+    console.log('pass:', pass);
     this.setState({
       isLoading: true,
     });
@@ -108,7 +98,17 @@ class Main extends React.Component {
       return;
     }
     //Gửi action tới redux, lưu giá trị usẻ vừa login thành công vào store
-    this.props.SetLoginUser(foundUser[0]);
+    this.props.getLoginUser(foundUser[0]);
+    this.setState({
+      userLogin: foundUser[0],
+    });
+    // Su dung socket.io
+    const socket = io(IP);
+    socket.on('connect', () => {
+      console.log('Connected to the Socket.IO server', socket.id);
+      socket.emit('login', foundUser[0]);
+    });
+    this.props.connectSocketIO(socket);
     const { navigation } = this.props;
     setTimeout(() => {
       navigation.navigate('Home', { screen: 'HomeScreen' });
@@ -118,23 +118,17 @@ class Main extends React.Component {
         isLoading: false,
       });
     }, 1000);
-    // Su dung socket.io
-    const socket = io('http://192.168.38.117:3000');
-    socket.on('connect', () => {
-      console.log('Connected to the Socket.IO server', socket.id);
-      socket.emit('login', foundUser[0]);
-    });
   };
   handleForgetPass() {
     // this.props.navigation.navigate('ProductScreen');
   }
   render() {
-    const { page, bgHeader, currentIndex } = this.state;
+    const { page, bgHeader, username, pass, isLoading } = e.state;
     return (
       <View style={{ flex: 1 }}>
         <StatusBar barStyle={'light-content'} />
         <View style={styles.header}>
-          <ImageBackground style={{ resizeMode: 'cover', height: '100%', margin: 0 }} source={bgHeader[currentIndex]}>
+          <ImageBackground style={{ resizeMode: 'cover', height: '100%', margin: 0 }} source={bgHeader}>
             <View style={{ alignItems: 'center', justifyContent: 'center', padding: 0 }}></View>
           </ImageBackground>
         </View>
@@ -192,7 +186,7 @@ class Main extends React.Component {
               handleLogin={this.handleLogin}
               handleChangeUsername={this.handleChangeUsername}
               handleChangePass={this.handleChangePass}
-              loginInfo={{ username: this.state.username, pass: this.state.pass, isLoading: this.state.isLoading }}
+              loginInfo={{ username: username, pass: pass, isLoading: isLoading }}
             />
           ) : (
             <Signup />
@@ -215,12 +209,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return { users: state.users.users, userLogin: state.userLogin.userLogin };
 };
-// gửi actions tới store của redux và thêm nó vào props của component, sau khi gửi thì redux nhận action ở hàm rootReducer(state,action)
-const mapDispatchToProps = (disPatch) => {
-  //Trả về một đối tượng
-  return {
-    // dispatch 1 đối tượng có thuộc tính type: tên action và payload
-    SetLoginUser: (userLogin) => disPatch({ type: 'SET_USER_LOGIN', payload: { userLogin: userLogin } }),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+// // gửi actions tới store của redux và thêm nó vào props của component, sau khi gửi thì redux nhận action ở hàm rootReducer(state,action)
+// const mapDispatchToProps = (disPatch) => {
+//   //Trả về một đối tượng
+//   return {
+//     // dispatch 1 đối tượng có thuộc tính type: tên action và payload
+//     SetLoginUser: (userLogin) => disPatch({ type: 'SET_USER_LOGIN', payload: { userLogin: userLogin } }),
+//     connectUsers,
+//   };
+// };
+export default connect(mapStateToProps, { getLoginUser, connectSocketIO })(Main);

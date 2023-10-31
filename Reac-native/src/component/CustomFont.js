@@ -17,6 +17,7 @@ import Nunito_Regular from '../assets/fonts/nuhito/Nunito-Regular.ttf';
 import Nunito_SemiBold from '../assets/fonts/nuhito/Nunito-SemiBold.ttf';
 import Nunito_SemiBoldItalic from '../assets/fonts/nuhito/Nunito-SemiBoldItalic.ttf';
 import Nunito_VariableFont_wght from '../assets/fonts/nuhito/Nunito-VariableFont_wght.ttf';
+import { useState } from 'react';
 const loadCustomFont = async () => {
   await Font.loadAsync({
     Nunito_Black: {
