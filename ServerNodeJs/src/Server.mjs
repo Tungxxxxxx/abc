@@ -11,13 +11,13 @@ io.on('connection', (socket) => {
     const existUser = userConnects.find((item) => item.user.id === user.id);
     if (!existUser) {
       userConnects.push({ user: user, id: socket.id });
-      // console.log('login', userConnects);
+      console.log('login', userConnects);
       io.emit('userConnects', userConnects);
     }
   });
   socket.on('logout', (user1) => {
     userConnects = userConnects.filter((item) => item.user.id !== user1.id);
-    // console.log('logout', userConnects);
+    console.log('logout', userConnects);
     io.emit('userConnects', userConnects);
   });
 });

@@ -11,7 +11,7 @@ class OrderScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logoMarginTop: new Animated.Value(500),
+      logoMarginTop: new Animated.Value(800),
       logoMarginRight: new Animated.Value(100),
       isAnimatingShow: false,
       visible: false,
@@ -22,18 +22,16 @@ class OrderScreen extends React.Component {
     this.setState({
       isAnimatingShow: true,
     });
-    Animated.timing(this.state.logoMarginTop, { toValue: -40, duration: 2000, useNativeDriver: false }).start(() =>
+    Animated.timing(this.state.logoMarginTop, { toValue: 0, duration: 2000, useNativeDriver: false }).start(() =>
       this.setState({
         isAnimatingShow: false,
-        logoMarginRight: new Animated.Value(100),
-        logoMarginTop: new Animated.Value(500),
+        logoMarginTop: new Animated.Value(800),
       }),
     );
-    Animated.timing(this.state.logoMarginRight, { toValue: 320, duration: 2000, useNativeDriver: false }).start(() =>
+    Animated.timing(this.state.logoMarginRight, { toValue: 0, duration: 2000, useNativeDriver: false }).start(() =>
       this.setState({
         isAnimatingShow: false,
         logoMarginRight: new Animated.Value(100),
-        logoMarginTop: new Animated.Value(500),
       }),
     );
   };
@@ -60,8 +58,8 @@ class OrderScreen extends React.Component {
             style={{
               width: 50,
               height: 50,
-              marginTop: this.state.logoMarginTop,
-              marginLeft: this.state.logoMarginRight,
+              top: this.state.logoMarginTop,
+              right: this.state.logoMarginRight,
               position: 'absolute',
             }}
           />

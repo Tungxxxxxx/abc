@@ -5,45 +5,40 @@ class AnimatingImage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAnimating: false,
       // Giá trị ban đầu
-      animatedValue: new Animated.Value(0),
+      logoMarginTop: new Animated.Value(800),
+      logoMarginRight: new Animated.Value(100),
+      isAnimatingShow: false,
     };
   }
   setIsAnimatingToParent = (isAnimating) => {
     return isAnimating;
   };
   startAnimation = (duration) => {
-    this.setState({ isAnimating: true });
-    Animated.timing(this.state.animatedValue, {
-      toValue: 1,
-      duration: duration,
-      useNativeDriver: false,
-    }).start(
-      () =>
-        this.setState({
-          isAnimating: false,
-          animatedValue: new Animated.Value(0),
-        }),
-      this.setIsAnimatingToParent(false),
+    this.setState({
+      isAnimatingShow: true,
+    });
+    Animated.timing(this.state.logoMarginTop, { toValue: 0, duration: duration, useNativeDriver: false }).start(() =>
+      this.setState({
+        isAnimatingShow: false,
+        logoMarginTop: new Animated.Value(800),
+      }),
+    );
+    Animated.timing(this.state.logoMarginRight, { toValue: 0, duration: duration, useNativeDriver: false }).start(() =>
+      this.setState({
+        isAnimatingShow: false,
+        logoMarginRight: new Animated.Value(100),
+      }),
     );
   };
   render() {
-    const { imgPath, width, height, x, y } = this.props.animatingProperties;
-    const translateX = this.state.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, x],
-    });
-    const translateY = this.state.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, y],
-    });
+    const { imgPath, width, height } = this.props.animatingProperties;
     return (
       <>
-        {this.state.isAnimating && (
+        {this.state.isAnimatingShow && (
           <Animated.Image
             source={imgPath}
-            style={{ width: width, height: height, transform: [{ translateX }, { translateY }] }}
+            style={{ width: width, height: height, right: this.state.logoMarginRight, top: this.state.logoMarginTop }}
           />
         )}
       </>

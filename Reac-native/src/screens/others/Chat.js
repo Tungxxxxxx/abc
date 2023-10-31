@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);

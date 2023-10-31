@@ -30,7 +30,7 @@ class ProductModal extends React.Component {
   };
   handleAddBagWithQty = (product, qty, userLogin) => {
     this.props.AddQtyToBag(product, qty, userLogin);
-    this.animatingImageRef.current.startAnimation(1000);
+    this.animatingImageRef.current.startAnimation(2000);
   };
   handleMuaNgay = () => {
     const { navigation } = this.props;
@@ -81,15 +81,13 @@ class ProductModal extends React.Component {
             >
               <View style={styles.modalContent}>
                 <View style={{ width: '100%', flexDirection: 'row', alignItems: 'flex-end' }}>
-                  <View style={{ position: 'absolute', left: 0, top: 0 }}>
+                  <View>
                     <AnimatingImage
                       ref={this.animatingImageRef}
                       animatingProperties={{
                         imgPath: product.avatar,
                         width: 50,
                         height: 50,
-                        x: 320,
-                        y: -450,
                       }}
                     />
                   </View>
