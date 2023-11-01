@@ -30,8 +30,8 @@ class BagScreen extends React.Component {
   };
   getProductsToPay(bags) {
     let products = [];
-    this.state.checkedItems.map((item) => {
-      [products, bags.filter((product) => product.product.id === item.id)];
+    products = this.state.checkedItems.map((checkedItem) => {
+      return bags.filter((product) => product.product.id === checkedItem.id);
     });
     return products;
   }
