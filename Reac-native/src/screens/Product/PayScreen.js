@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PriceFormat from '../../component/PriceFormat';
 import { Divider } from 'react-native-paper';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
 //Icon
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //styles
@@ -12,6 +12,7 @@ import { dividerStyle } from '../../styles';
 import { alertMess } from '../../component/ALertFunc';
 import * as Message from '../../common/Message';
 import AlertMess from '../../component/AlertMess';
+import { KIEM_TRA_DON_HANG, NAP_TIEN } from '../../common/Constant';
 class PayScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -22,33 +23,20 @@ class PayScreen extends React.Component {
       content: '',
     };
   }
-  // handlePay = (payments, wallet) => {
-  //   const walletBalance = wallet - payments;
-  //   if (walletBalance < 0) {
-  //     alertMess(Message.PAY_ERROR, null, [
-  //       { text: 'Nạp tiền', onPress: () => console.log('Nạp tiền được chọn') },
-  //       { text: 'Trở lại', onPress: () => console.log('Trở lại được chọn') },
-  //     ]);
-  //   } else {
-  //     alertMess(Message.PAY_SUCCESS, null, [
-  //       { text: 'Kiểm tra đơn hàng', onPress: () => console.log('Nạp tiền được chọn') },
-  //       { text: 'Trở lại', onPress: () => console.log('Trở lại được chọn') },
-  //     ]);
-  //   }
-  // };
+
   handlePay = (payments, wallet) => {
     const walletBalance = wallet - payments;
     if (walletBalance >= 0) {
       this.setState({
         visibleDialog: true,
-        button1: 'Kiểm tra đơn hàng',
+        button1: KIEM_TRA_DON_HANG,
         button2: 'Trở lại',
         content: Message.PAY_SUCCESS,
       });
     } else {
       this.setState({
         visibleDialog: true,
-        button1: 'Nạp tiền',
+        button1: NAP_TIEN,
         button2: 'Trở lại',
         content: Message.PAY_ERROR,
       });
@@ -60,92 +48,114 @@ class PayScreen extends React.Component {
     });
   };
   render() {
-    const { product, userLogin, qty } = this.props.route.params;
-    const shipFee = 30000;
-    const goodsMoney = product.price * qty;
-    const payments = product.price * qty + shipFee;
-    return (
-      <View style={styles.container}>
-        <View style={styles.address}>
-          <View style={styles.addressHeader}>
-            <Icon name="location-pin" size={24} color={'rgba(111, 202, 186, 1)'} />
-            <Text>Địa chỉ nhận hàng</Text>
+    try {
+      const { products } = this.props.route.params;
+      const { userLogin } = this.props;
+      console.log('products', products);
+      const shipFee = 30000;
+      // const goodsMoney = product.price * qty;
+      // const payments = product.price * qty + shipFee;
+      return (
+        <View style={styles.container}>
+          <View style={styles.address}>
+            <View style={styles.addressHeader}>
+              <Icon name="location-pin" size={24} color={'rgba(111, 202, 186, 1)'} />
+              <Text>Địa chỉ nhận hàng</Text>
+            </View>
+            <Text>{userLogin.address}</Text>
           </View>
-          <Text>{userLogin.address}</Text>
-        </View>
-        <Divider style={dividerStyle} />
-        <View style={styles.product}>
-          <Image style={styles.productImage} source={product.avatar} />
-          <View style={styles.productContent}>
-            <Text>{product.title}</Text>
-            <Text>
-              <PriceFormat price={product.price} />
-            </Text>
-            <Text>Số lượng: {qty}</Text>
-          </View>
-        </View>
-        <Divider style={dividerStyle} />
-        <View style={styles.payDetail}>
-          <View style={styles.payDetailItem}>
-            <View style={styles.payDetailHeader}>
-              <MaterialCommunityIcons name="view-list-outline" size={24} color={'rgba(111, 202, 186, 1)'} />
-              <Text>Chi tiết thanh toán</Text>
+          <Divider style={dividerStyle} />
+          <FlatList
+            data={products}
+            numColumns={1}
+            keyExtractor={(item) => item.product.id.toString()}
+            renderItem={({ item }) => {
+              return (
+                <View style={styles.product}>
+                  <Image style={styles.productImage} source={item.product.avatar} />
+                  <View style={styles.productContent}>
+                    <Text>{item.product.title}</Text>
+                    <Text>
+                      <PriceFormat price={item.product.price} />
+                    </Text>
+                    <Text>Số lượng: {item.qty}</Text>
+                  </View>
+                </View>
+              );
+            }}
+          />
+
+          <Divider style={dividerStyle} />
+          {/* <View style={styles.payDetail}>
+            <View style={styles.payDetailItem}>
+              <View style={styles.payDetailHeader}>
+                <MaterialCommunityIcons name="view-list-outline" size={24} color={'rgba(111, 202, 186, 1)'} />
+                <Text>Chi tiết thanh toán</Text>
+              </View>
+            </View>
+            <View style={styles.payDetailItem}>
+              <Text>Tổng tiền hàng</Text>
+              <Text>
+                <PriceFormat price={goodsMoney} />
+              </Text>
+            </View>
+            <View style={styles.payDetailItem}>
+              <Text>Phí vận chuyển</Text>
+              <Text>
+                <PriceFormat price={shipFee} />
+              </Text>
+            </View>
+            <View style={styles.payDetailItem}>
+              <Text style={{ fontWeight: 'bold' }}>Tổng thanh toán</Text>
+              <Text style={{ color: 'red' }}>
+                <PriceFormat price={payments} />
+              </Text>
             </View>
           </View>
-          <View style={styles.payDetailItem}>
-            <Text>Tổng tiền hàng</Text>
-            <Text>
-              <PriceFormat price={goodsMoney} />
+          <Divider style={dividerStyle} />
+          <View style={styles.wallet}>
+            <Text>Số dư ví</Text>
+            <Text style={{ color: 'green' }}>
+              <PriceFormat price={userLogin.money} />
             </Text>
           </View>
-          <View style={styles.payDetailItem}>
-            <Text>Phí vận chuyển</Text>
-            <Text>
-              <PriceFormat price={shipFee} />
+          <View style={styles.wallet}>
+            <Text>Còn lại</Text>
+            <Text style={{ color: userLogin.money - payments >= 0 ? 'green' : 'red' }}>
+              <PriceFormat price={userLogin.money - payments} />
             </Text>
           </View>
-          <View style={styles.payDetailItem}>
-            <Text style={{ fontWeight: 'bold' }}>Tổng thanh toán</Text>
-            <Text style={{ color: 'red' }}>
-              <PriceFormat price={payments} />
-            </Text>
-          </View>
-        </View>
-        <Divider style={dividerStyle} />
-        <View style={styles.wallet}>
-          <Text>Số dư ví</Text>
-          <Text style={{ color: 'green' }}>
-            <PriceFormat price={userLogin.money} />
-          </Text>
-        </View>
-        <View style={styles.wallet}>
-          <Text>Còn lại</Text>
-          <Text style={{ color: userLogin.money - payments >= 0 ? 'green' : 'red' }}>
-            <PriceFormat price={userLogin.money - payments} />
-          </Text>
-        </View>
-        <Divider style={dividerStyle} />
-        <View style={styles.submit}>
-          <TouchableOpacity
-            style={styles.touchSubmit}
-            onPress={() => {
-              this.handlePay(payments, userLogin.money);
+          <Divider style={dividerStyle} />
+          <View style={styles.submit}>
+            <TouchableOpacity
+              style={styles.touchSubmit}
+              onPress={() => {
+                this.handlePay(payments, userLogin.money);
+              }}
+            >
+              <Text>Đặt hàng</Text>
+            </TouchableOpacity>
+          </View> */}
+          <AlertMess
+            payDialog={{
+              visibleDialog: this.state.visibleDialog,
+              button1: this.state.button1,
+              button2: this.state.button2,
+              content: this.state.content,
             }}
-          >
-            <Text>Đặt hàng</Text>
-          </TouchableOpacity>
+            hideDialog={this.hideDialog}
+          />
         </View>
-        <AlertMess
-          payDialog={{
-            visibleDialog: this.state.visibleDialog,
-            button1: this.state.button1,
-            button2: this.state.button2,
-            content: this.state.content,
-          }}
-          hideDialog={this.hideDialog}
-        />
-      </View>
-    );
+      );
+    } catch (error) {
+      return (
+        <View>
+          <Text>App đang được bảo trì:</Text>
+          <Text>{error.message}</Text>
+          <Text>{JSON.stringify(this.props.route.params)}</Text>
+        </View>
+      );
+    }
   }
 }
 const styles = StyleSheet.create({

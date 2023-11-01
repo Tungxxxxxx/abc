@@ -24,20 +24,21 @@ class SupportScreen extends React.Component {
     const { usersConnected } = this.state;
     console.log(usersConnected);
     return (
-      <View style={{ flex: 1, padding: 5 }}>
+      <View style={{ width: '100%', padding: 5 }}>
         <View
           style={{
-            flex: 1,
             width: '100%',
-            height: 50,
+            height: 100,
             flexDirection: 'row',
             justifyContent: 'flex-start',
-            borderWidth: 1,
           }}
         >
           {usersConnected.map((item, i) => {
             return (
-              <View key={item.user.id} style={{ marginLeft: 10 }}>
+              <View
+                key={item.user.id}
+                style={{ marginLeft: 10, width: '25%', height: '100%', justifyContent: 'center' }}
+              >
                 <TouchableOpacity
                   onPress={() => {
                     this.handleOpenChatBox(item.user);
@@ -45,14 +46,14 @@ class SupportScreen extends React.Component {
                 >
                   <Image
                     source={item.user.avatar}
-                    style={{ width: 100, height: 100, borderRadius: 50, borderWidth: 5, borderColor: 'green' }}
+                    style={{ width: 80, height: 80, borderRadius: 50, borderWidth: 5, borderColor: 'green' }}
                   />
                 </TouchableOpacity>
               </View>
             );
           })}
         </View>
-        <View style={{ flex: 1, flexDirection: 'column', borderWidth: 1 }}>
+        <View style={{ flexDirection: 'column' }}>
           {usersConnected.map((item, i) => {
             return (
               <View key={item.user.id} style={{ marginTop: 20 }}>

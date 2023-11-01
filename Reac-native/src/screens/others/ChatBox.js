@@ -9,6 +9,7 @@ class ChatBox extends React.Component {
   }
   render() {
     const { user } = this.props.route.params;
+
     return (
       <View style={{ flex: 1 }}>
         <View
@@ -35,8 +36,8 @@ class ChatBox extends React.Component {
               this.props.navigation.goBack();
             }}
           />
-          <Image source={user.avatar} style={{ width: 30, height: 30, borderRadius: 15, marginRight: 10 }} />
-          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>{user.name}</Text>
+          <Image source={user && user.avatar} style={{ width: 30, height: 30, borderRadius: 15, marginRight: 10 }} />
+          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>{user && user.name}</Text>
         </View>
         <View
           style={{

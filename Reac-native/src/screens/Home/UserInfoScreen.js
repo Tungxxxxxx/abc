@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import { IP } from '../../common/Constant';
+import { Avatar, Divider } from 'react-native-paper';
+
 var e;
 class UserInfoScreen extends React.Component {
   constructor(props) {
@@ -29,25 +31,41 @@ class UserInfoScreen extends React.Component {
     });
   }
   render() {
-    const users = e.state.users;
-    // console.log(users);
+    const { userLogin } = this.props;
     return (
-      <View>
+      <View style={{ paddingTop: 10, paddingLeft: 5, paddingRight: 5, paddingBottom: 10 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Avatar.Image size={40} source={userLogin.avatar} />
+          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.nickname}</Text>
+        </View>
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+        <View>
+          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Số dư ví</Text>
+          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.money}</Text>
+        </View>
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+        <View>
+          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Địa chỉ</Text>
+          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.address}</Text>
+        </View>
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+        <View>
+          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Họ và tên</Text>
+          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.name}</Text>
+        </View>
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+        <View>
+          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Email</Text>
+          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.email}</Text>
+        </View>
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
         <View>
           <TouchableOpacity
             onPress={() => {
               this.handleLogout();
             }}
           >
-            <Text>Đăng xuất</Text>
-          </TouchableOpacity>
-          <Text>{JSON.stringify(users)}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              this.handleLogin();
-            }}
-          >
-            <Text>Thông báo</Text>
+            <Text style={{ fontFamily: 'Nunito_ExtraBold', color: 'red' }}>Đăng xuất</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -6,22 +6,35 @@ import { Icon } from '@rneui/themed';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import PriceFormat from '../../component/PriceFormat';
 import ProductScreen from './ProductScreen';
+import { Checkbox } from 'react-native-paper';
 class BagScreen extends React.Component {
   constructor(props) {
     super(props);
+    const { shoppingBagsUserLogin } = this.props;
     this.state = {
-      isCheckedAll: false,
-      checkedItems: [1, 2, 3, 4, 5],
+      isCheckedAll: true,
+      checkedItems: shoppingBagsUserLogin.map((item) => item.product.id),
       test: 'Chọn tất',
     };
   }
   sumPrices = (bags) => {
     let sum = 0;
-    bags.forEach((item) => {
-      sum += item.product.price * item.qty;
+    this.state.checkedItems.map((item) => {
+      bags.map((bag) => {
+        if (bag.product.id === item) {
+          sum += bag.product.price * bag.qty;
+        }
+      });
     });
     return sum;
   };
+  getProductsToPay(bags) {
+    let products = [];
+    this.state.checkedItems.map((item) => {
+      [products, bags.filter((product) => product.product.id === item.id)];
+    });
+    return products;
+  }
   handlePressAllCheck = (bags) => {
     const { isCheckedAll, checkedItems } = this.state;
 
@@ -46,6 +59,7 @@ class BagScreen extends React.Component {
   };
   render() {
     const { shoppingBagsUserLogin } = this.props;
+    console.log('checkedItems', this.state.checkedItems);
     return (
       <View>
         <View style={{ width: '100%' }}>
@@ -61,8 +75,8 @@ class BagScreen extends React.Component {
                     alignItems: 'center',
                   }}
                 >
-                  <BouncyCheckbox
-                    isChecked={this.state.isCheckedAll}
+                  <Checkbox
+                    status={this.state.isCheckedAll ? 'checked' : 'unchecked'}
                     onPress={() => {
                       this.handlePressAllCheck(shoppingBagsUserLogin);
                     }}
@@ -83,6 +97,11 @@ class BagScreen extends React.Component {
                       justifyContent: 'center',
                       alignItems: 'center',
                       borderRadius: 5,
+                    }}
+                    onPress={() => {
+                      this.props.navigation.navigate('PayScreen', {
+                        products: this.getProductsToPay(shoppingBagsUserLogin),
+                      });
                     }}
                   >
                     <Text>Mua ngay</Text>
@@ -109,9 +128,9 @@ class BagScreen extends React.Component {
                         }}
                       >
                         <View style={{ width: 40, height: 80, justifyContent: 'center', alignItems: 'center' }}>
-                          <BouncyCheckbox
+                          <Checkbox
                             key={item.product.id}
-                            isChecked={this.state.checkedItems.includes(item.product.id) || false}
+                            status={this.state.checkedItems.includes(item.product.id) ? 'checked' : 'unchecked'}
                             onPress={() => this.handleChecked(item.product.id)}
                           />
                         </View>
@@ -144,9 +163,9 @@ class BagScreen extends React.Component {
                             >
                               <TouchableOpacity
                                 style={{ width: '100%', height: 30, justifyContent: 'center', alignItems: 'center' }}
-                                // onPress={() => {
-                                //   this.handlePressMoiNhat();
-                                // }}
+                                onPress={() => {
+                                  this.props.navigation.navigate('PayScreen');
+                                }}
                               >
                                 <Text
                                   style={{
@@ -178,6 +197,6 @@ class BagScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { shoppingBagsUserLogin: state.users.shoppingBagsUserLogin };
+  return { shoppingBagsUserLogin: state.users.shoppingBagsUserLogin, navigation: state.navigation.navigation };
 };
 export default connect(mapStateToProps)(BagScreen);

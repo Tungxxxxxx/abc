@@ -29,8 +29,8 @@ class ProductModal extends React.Component {
     });
   };
   handleAddBagWithQty = (product, qty, userLogin) => {
-    this.props.AddQtyToBag(product, qty, userLogin);
     this.animatingImageRef.current.startAnimation(2000);
+    this.props.AddQtyToBag(product, qty, userLogin);
   };
   handleMuaNgay = () => {
     const { navigation } = this.props;
@@ -81,13 +81,13 @@ class ProductModal extends React.Component {
             >
               <View style={styles.modalContent}>
                 <View style={{ width: '100%', flexDirection: 'row', alignItems: 'flex-end' }}>
-                  <View>
+                  <View style={{ position: 'absolute', zIndex: 9999 }}>
                     <AnimatingImage
                       ref={this.animatingImageRef}
                       animatingProperties={{
                         imgPath: product.avatar,
-                        width: 50,
-                        height: 50,
+                        width: 40,
+                        height: 40,
                       }}
                     />
                   </View>

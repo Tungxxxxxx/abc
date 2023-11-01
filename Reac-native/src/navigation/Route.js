@@ -7,6 +7,7 @@ import ProductDetail from '../screens/Product/ProductDetail';
 import { connect } from 'react-redux';
 import PayScreen from '../screens/Product/PayScreen';
 import ChatBox from '../screens/others/ChatBox';
+import TopUpWallet from '../screens/others/TopUpWallet';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,7 @@ class Route extends React.Component {
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="PayScreen" component={PayScreen} options={{ title: 'Thanh toán' }} />
           <Stack.Screen name="ChatBox" component={ChatBox} options={{ headerShown: false }} />
+          <Stack.Screen name="TopUpWallet" component={TopUpWallet} options={{ title: 'Nạp tiền' }} />
           <Stack.Screen
             name="ProductDetail"
             component={ProductDetail}

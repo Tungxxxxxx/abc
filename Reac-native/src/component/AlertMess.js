@@ -3,11 +3,21 @@ import { Dialog, Portal } from 'react-native-paper';
 import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
+import { KIEM_TRA_DON_HANG, NAP_TIEN } from '../common/Constant';
 class AlertMess extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+  handlePressButton = (button1) => {
+    if (button1 === KIEM_TRA_DON_HANG) {
+      this.props.navigation.navigate('Order');
+    }
+    if (button1 === NAP_TIEN) {
+      this.props.navigation.navigate('TopUpWallet');
+    }
+  };
   render() {
     const { content, button1, button2, visibleDialog } = this.props.payDialog;
     return (
@@ -16,10 +26,15 @@ class AlertMess extends React.Component {
           <Dialog.Content>
             <Text style={styles.contentStyle}>{content}</Text>
           </Dialog.Content>
-          {button1 || button2 ? (
+          {button1 ? (
             <Dialog.Actions>
               <View style={styles.dialogAction}>
-                <TouchableOpacity style={styles.touch}>
+                <TouchableOpacity
+                  style={styles.touch}
+                  onPress={() => {
+                    this.handlePressButton(button1);
+                  }}
+                >
                   <Text style={styles.buttontext}>{button1}</Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity>
@@ -53,4 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
   },
 });
-export default AlertMess;
+const mapStateToProps = (state) => {
+  return { navigation: state.navigation.navigation };
+};
+export default connect(mapStateToProps)(AlertMess);

@@ -6,8 +6,8 @@ class AnimatingImage extends React.Component {
     super(props);
     this.state = {
       // Giá trị ban đầu
-      logoMarginTop: new Animated.Value(800),
-      logoMarginRight: new Animated.Value(100),
+      logoMarginTop: new Animated.Value(0),
+      logoMarginRight: new Animated.Value(0),
       isAnimatingShow: false,
     };
   }
@@ -18,17 +18,18 @@ class AnimatingImage extends React.Component {
     this.setState({
       isAnimatingShow: true,
     });
-    Animated.timing(this.state.logoMarginTop, { toValue: 0, duration: duration, useNativeDriver: false }).start(() =>
+    Animated.timing(this.state.logoMarginTop, { toValue: -600, duration: duration, useNativeDriver: false }).start(() =>
       this.setState({
         isAnimatingShow: false,
-        logoMarginTop: new Animated.Value(800),
+        logoMarginTop: new Animated.Value(0),
       }),
     );
-    Animated.timing(this.state.logoMarginRight, { toValue: 0, duration: duration, useNativeDriver: false }).start(() =>
-      this.setState({
-        isAnimatingShow: false,
-        logoMarginRight: new Animated.Value(100),
-      }),
+    Animated.timing(this.state.logoMarginRight, { toValue: -450, duration: duration, useNativeDriver: false }).start(
+      () =>
+        this.setState({
+          isAnimatingShow: false,
+          logoMarginRight: new Animated.Value(0),
+        }),
     );
   };
   render() {
