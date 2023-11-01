@@ -47,14 +47,24 @@ class PayScreen extends React.Component {
       visibleDialog: false,
     });
   };
+  sumProductsPrice = (products) => {
+    let sum = 0;
+    products.forEach((product) => {
+      sum += product.product.price * product.qty;
+    });
+    return sum;
+  };
   render() {
     try {
+      if (!this.props.userLogin) {
+        this.props.navigation.navigate('Main');
+      }
       const { products } = this.props.route.params;
       const { userLogin } = this.props;
       console.log('products', products);
       const shipFee = 30000;
-      // const goodsMoney = product.price * qty;
-      // const payments = product.price * qty + shipFee;
+      const goodsMoney = this.sumProductsPrice(products);
+      const payments = goodsMoney + shipFee;
       return (
         <View style={styles.container}>
           <View style={styles.address}>
@@ -66,6 +76,7 @@ class PayScreen extends React.Component {
           </View>
           <Divider style={dividerStyle} />
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={products}
             numColumns={1}
             keyExtractor={(item) => item.product.id.toString()}
@@ -86,7 +97,7 @@ class PayScreen extends React.Component {
           />
 
           <Divider style={dividerStyle} />
-          {/* <View style={styles.payDetail}>
+          <View style={styles.payDetail}>
             <View style={styles.payDetailItem}>
               <View style={styles.payDetailHeader}>
                 <MaterialCommunityIcons name="view-list-outline" size={24} color={'rgba(111, 202, 186, 1)'} />
@@ -135,7 +146,7 @@ class PayScreen extends React.Component {
             >
               <Text>Đặt hàng</Text>
             </TouchableOpacity>
-          </View> */}
+          </View>
           <AlertMess
             payDialog={{
               visibleDialog: this.state.visibleDialog,
@@ -179,6 +190,6 @@ const styles = StyleSheet.create({
   wallet: { width: '100%', flexDirection: 'row', justifyContent: 'space-between' },
 });
 const mapStateToProps = (state) => {
-  return { userLogin: state.userLogin.userLogin };
+  return { userLogin: state.userLogin.userLogin, navigation: state.navigation.navigation };
 };
 export default connect(mapStateToProps)(PayScreen);

@@ -34,6 +34,9 @@ class Home extends React.Component {
     this.props.SetNavigation(this.props.navigation);
   }
   render() {
+    if (!this.props.userLogin) {
+      this.props.navigation.navigate('Main');
+    }
     const { userLogin } = this.props;
     return (
       <>

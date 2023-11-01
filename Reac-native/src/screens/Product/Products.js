@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RatingComponent from '../../component/RatingComponent';
 import PriceFormat from '../../component/PriceFormat';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Icon as IconRneui } from '@rneui/themed';
 import { connect } from 'react-redux';
 import DividerComponent from '../../component/DividerComponent';
 
@@ -201,30 +202,27 @@ class Products extends React.Component {
                       </Text>
                       <Text style={{ color: 'red', fontStyle: 'italic' }}> -{item.saleOff}</Text>
                     </View>
-                    <RatingComponent rating={item.rating} />
-                    <TouchableOpacity
-                      style={{
-                        width: '70%',
-                        height: 30,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: 'orange',
-                        borderRadius: 10,
-                      }}
-                      onPress={() => {
-                        this.props.handleAddBag(item, userLogin);
-                      }}
-                    >
-                      <Text
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      <RatingComponent rating={item.rating} />
+
+                      {/* <Text
                         style={{
                           color: 'rgb(57, 58, 52)',
                           fontSize: 13,
                         }}
                       >
                         Thêm vào giỏ
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                      </Text> */}
+                      <IconRneui
+                        name="add-shopping-cart"
+                        size={20}
+                        color={'#EE4E34'}
+                        onPress={() => {
+                          this.props.handleAddBag(item, userLogin);
+                        }}
+                      />
+                    </View>
+                    {/* <TouchableOpacity
                       style={{
                         width: '70%',
                         height: 30,
@@ -245,7 +243,7 @@ class Products extends React.Component {
                       >
                         Mua ngay
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 )}
               />

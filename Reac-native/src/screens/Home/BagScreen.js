@@ -6,7 +6,7 @@ import { Icon } from '@rneui/themed';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import PriceFormat from '../../component/PriceFormat';
 import ProductScreen from './ProductScreen';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, Dialog } from 'react-native-paper';
 class BagScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +15,7 @@ class BagScreen extends React.Component {
       isCheckedAll: true,
       checkedItems: shoppingBagsUserLogin.map((item) => item.product.id),
       test: 'Chọn tất',
+      isShowDialog: false,
     };
   }
   sumPrices = (bags) => {
@@ -29,10 +30,7 @@ class BagScreen extends React.Component {
     return sum;
   };
   getProductsToPay(bags) {
-    let products = [];
-    products = this.state.checkedItems.map((checkedItem) => {
-      return bags.filter((product) => product.product.id === checkedItem.id);
-    });
+    const products = bags.filter((product) => this.state.checkedItems.includes(product.product.id));
     return products;
   }
   handlePressAllCheck = (bags) => {
@@ -55,6 +53,16 @@ class BagScreen extends React.Component {
     }
     this.setState({
       checkedItems: checkedItemsUpdate,
+    });
+  };
+  ShowDialog = () => {
+    this.setState({
+      isShowDialog: true,
+    });
+  };
+  hideDialog = () => {
+    this.setState({
+      isShowDialog: false,
     });
   };
   render() {
@@ -99,9 +107,14 @@ class BagScreen extends React.Component {
                       borderRadius: 5,
                     }}
                     onPress={() => {
-                      this.props.navigation.navigate('PayScreen', {
-                        products: this.getProductsToPay(shoppingBagsUserLogin),
-                      });
+                      const products = this.getProductsToPay(shoppingBagsUserLogin);
+                      if (products && products.length > 0) {
+                        this.props.navigation.navigate('PayScreen', {
+                          products: products,
+                        });
+                      } else {
+                        this.ShowDialog();
+                      }
                     }}
                   >
                     <Text>Mua ngay</Text>
@@ -164,7 +177,9 @@ class BagScreen extends React.Component {
                               <TouchableOpacity
                                 style={{ width: '100%', height: 30, justifyContent: 'center', alignItems: 'center' }}
                                 onPress={() => {
-                                  this.props.navigation.navigate('PayScreen');
+                                  this.props.navigation.navigate('PayScreen', {
+                                    products: [{ product: item.product, qty: item.qty }],
+                                  });
                                 }}
                               >
                                 <Text
@@ -192,6 +207,15 @@ class BagScreen extends React.Component {
             </View>
           )}
         </View>
+        <Dialog
+          visible={this.state.isShowDialog}
+          onDismiss={this.hideDialog}
+          style={{ backgroundColor: '#FCEDDA', justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Dialog.Content>
+            <Text>Chưa chọn sản phẩm nào</Text>
+          </Dialog.Content>
+        </Dialog>
       </View>
     );
   }

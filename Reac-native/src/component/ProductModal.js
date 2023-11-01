@@ -35,9 +35,7 @@ class ProductModal extends React.Component {
   handleMuaNgay = () => {
     const { navigation } = this.props;
     navigation.navigate('PayScreen', {
-      product: this.props.product,
-      qty: this.state.qty,
-      userLogin: this.props.userLogin,
+      products: [{ product: this.props.product, qty: this.state.qty }],
     });
     this.props.handleCloseModal(false);
   };
