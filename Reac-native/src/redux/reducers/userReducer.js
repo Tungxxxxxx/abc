@@ -33,6 +33,7 @@ const initStateUsers = {
           image: require('../../assets/images/products/sg-11134201-7rbkr-lm8hkd3uitspe3.jpg'),
         },
       ],
+      orders: [],
     },
     {
       id: 2,
@@ -47,6 +48,7 @@ const initStateUsers = {
       avatar: require('../../assets/images/tx2.jpg'),
       shoppingBags: [],
       countProductInBag: 0,
+      orders: [],
     },
     {
       id: 3,
@@ -61,33 +63,50 @@ const initStateUsers = {
       avatar: require('../../assets/images/tx3.jpg'),
       shoppingBags: [],
       countProductInBag: 0,
+      orders: [],
     },
   ],
   shoppingBagsUserLogin: [],
 };
 function GetUsersAddedProduct(state, action) {
-  const userLogin = action.payload.userLogin;
-  const qty = action.payload.qty;
-  const usersCopy = [...state.users];
-  const findIndex = usersCopy.findIndex((item) => item.id === userLogin.id);
-  const shoppingBagsCopy = [...usersCopy[findIndex].shoppingBags];
-  //Tăng count mỗi lần add product vào giỏ
-  usersCopy[findIndex].countProductInBag += qty;
-  // Tìm product đã tồn tại chưa
-  const findProductIndex = shoppingBagsCopy.findIndex((item) => item.product.id === action.payload.product.id);
-  if (findProductIndex !== -1) {
-    shoppingBagsCopy[findProductIndex].qty = shoppingBagsCopy[findProductIndex].qty + qty;
+  if (action.type !== Constant.UPDATE_ORDERS) {
+    const userLogin = action.payload.userLogin;
+    const qty = action.payload.qty;
+    const usersCopy = [...state.users];
+    const findIndex = usersCopy.findIndex((item) => item.id === userLogin.id);
+    const shoppingBagsCopy = [...usersCopy[findIndex].shoppingBags];
+    //Tăng count mỗi lần add product vào giỏ
+    usersCopy[findIndex].countProductInBag += qty;
+    // Tìm product đã tồn tại chưa
+    const findProductIndex = shoppingBagsCopy.findIndex((item) => item.product.id === action.payload.product.id);
+    if (findProductIndex !== -1) {
+      shoppingBagsCopy[findProductIndex].qty = shoppingBagsCopy[findProductIndex].qty + qty;
+    } else {
+      shoppingBagsCopy.push({ product: action.payload.product, qty: qty });
+    }
+    // Set shoppingBags cho usersCopy
+    usersCopy[findIndex].shoppingBags = shoppingBagsCopy;
+    const shoppingBagsUserLogin = shoppingBagsCopy;
+    return {
+      usersAddedProduct: usersCopy,
+      shoppingBagsUserLogin: shoppingBagsUserLogin,
+      countPIB: usersCopy[findIndex].countProductInBag,
+    };
   } else {
-    shoppingBagsCopy.push({ product: action.payload.product, qty: qty });
+    return {
+      usersAddedProduct: null,
+      shoppingBagsUserLogin: null,
+      countPIB: null,
+    };
   }
-  // Set shoppingBags cho usersCopy
-  usersCopy[findIndex].shoppingBags = shoppingBagsCopy;
-  const shoppingBagsUserLogin = shoppingBagsCopy;
-  return {
-    usersAddedProduct: usersCopy,
-    shoppingBagsUserLogin: shoppingBagsUserLogin,
-    countPIB: usersCopy[findIndex].countProductInBag,
-  };
+}
+function getUserUpdatedOrder(state, action) {
+  const order = action.payload.order;
+  const userId = action.payload.userId;
+  const usersCopy = [...state.users];
+  const index = usersCopy.findIndex((user) => user.id === userId);
+  usersCopy[index].orders.push(order);
+  return usersCopy;
 }
 
 const userReducer = (state = initStateUsers, action) => {
@@ -98,6 +117,9 @@ const userReducer = (state = initStateUsers, action) => {
         return { ...state, users: usersAddedProduct, shoppingBagsUserLogin: shoppingBagsUserLogin, countPIB: countPIB };
       case Constant.ADD_QTY_TO_BAG:
         return { ...state, users: usersAddedProduct, shoppingBagsUserLogin: shoppingBagsUserLogin, countPIB: countPIB };
+      case Constant.UPDATE_ORDERS:
+        const users = getUserUpdatedOrder(state, action);
+        return { ...state, users: users };
       default:
         return state;
     }

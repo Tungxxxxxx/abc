@@ -5,6 +5,7 @@ const initStateUserLogin = {
 };
 const userLoginReducer = (state = initStateUserLogin, action) => {
   if (action.type === Constant.LOGIN_USER) {
+    console.log('LOGIN');
     // Dùng switch-case để xử lý các action, khi login component sẽ gửi action có type làSET_USER_LOGIN
     // payload là data gửi lên
     switch (action.type) {

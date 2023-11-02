@@ -12,7 +12,10 @@ import { dividerStyle } from '../../styles';
 import { alertMess } from '../../component/ALertFunc';
 import * as Message from '../../common/Message';
 import AlertMess from '../../component/AlertMess';
-import { KIEM_TRA_DON_HANG, NAP_TIEN } from '../../common/Constant';
+import { KIEM_TRA_DON_HANG, NAP_TIEN, LOGIN_USER } from '../../common/Constant';
+import { updateOrders } from '../../redux/action/updateOrders';
+import { updateUserLogin } from '../../redux/action/updateUserLogin';
+import { getUserLogin } from '../../utils/function';
 class PayScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +36,16 @@ class PayScreen extends React.Component {
         button2: 'Trở lại',
         content: Message.PAY_SUCCESS,
       });
+      const { products } = this.props.route.params;
+
+      const order = {
+        id: Math.floor(Math.random() * 100000),
+        products: products,
+        payments: payments,
+        status: 'Chờ lấy hàng',
+      };
+      this.props.updateOrders(order, this.props.userLogin.id);
+      this.props.updateUserLogin(getUserLogin(this.props.users, this.props.userLogin.id));
     } else {
       this.setState({
         visibleDialog: true,
@@ -61,7 +74,6 @@ class PayScreen extends React.Component {
       }
       const { products } = this.props.route.params;
       const { userLogin } = this.props;
-      console.log('products', products);
       const shipFee = 30000;
       const goodsMoney = this.sumProductsPrice(products);
       const payments = goodsMoney + shipFee;
@@ -190,6 +202,7 @@ const styles = StyleSheet.create({
   wallet: { width: '100%', flexDirection: 'row', justifyContent: 'space-between' },
 });
 const mapStateToProps = (state) => {
-  return { userLogin: state.userLogin.userLogin, navigation: state.navigation.navigation };
+  return { userLogin: state.userLogin.userLogin, navigation: state.navigation.navigation, users: state.users.users };
 };
-export default connect(mapStateToProps)(PayScreen);
+
+export default connect(mapStateToProps, { updateOrders, updateUserLogin })(PayScreen);

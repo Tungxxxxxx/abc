@@ -12,8 +12,8 @@ class BagScreen extends React.Component {
     super(props);
     const { shoppingBagsUserLogin } = this.props;
     this.state = {
-      isCheckedAll: true,
-      checkedItems: shoppingBagsUserLogin.map((item) => item.product.id),
+      isCheckedAll: false,
+      checkedItems: [],
       test: 'Chọn tất',
       isShowDialog: false,
     };
@@ -221,6 +221,6 @@ class BagScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { shoppingBagsUserLogin: state.users.shoppingBagsUserLogin, navigation: state.navigation.navigation };
+  return { shoppingBagsUserLogin: state.userLogin.userLogin.shoppingBags, navigation: state.navigation.navigation };
 };
 export default connect(mapStateToProps)(BagScreen);
