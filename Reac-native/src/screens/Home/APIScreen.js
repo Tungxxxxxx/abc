@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
+import { TouchableOpacity, View, ScrollView } from 'react-native';
 //Thêm connect
 import { connect } from 'react-redux';
 //Thêm action
@@ -21,6 +21,7 @@ import { fetchPostLoginUnSuccessful } from '../../redux/action/postLoginUnSucces
 import Loading from '../../component/Loading';
 import { Divider } from 'react-native-paper';
 import { Linking } from 'react-native';
+import { TextNormal } from '../../component/TextCustom';
 class APIScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -180,7 +181,7 @@ class APIScreen extends React.Component {
               this.HideGetListUsers();
             }}
           >
-            <Text style={{ color: 'blue' }}>Ẩn Get</Text>
+            <TextNormal style={{ color: 'blue' }}>Ẩn Get</TextNormal>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -188,7 +189,7 @@ class APIScreen extends React.Component {
             }}
             style={{ marginLeft: 50 }}
           >
-            <Text style={{ color: 'blue' }}>Ẩn Post Put Patch Delete</Text>
+            <TextNormal style={{ color: 'blue' }}>Ẩn Post Put Patch Delete</TextNormal>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -197,7 +198,7 @@ class APIScreen extends React.Component {
           }}
           style={{ marginRight: 20 }}
         >
-          <Text style={{ color: 'green' }}>API link</Text>
+          <TextNormal style={{ color: 'green' }}>API link</TextNormal>
         </TouchableOpacity>
         <ScrollView>
           <View style={{ flex: 1 }}>
@@ -207,98 +208,98 @@ class APIScreen extends React.Component {
               }}
               style={{ marginRight: 20 }}
             >
-              <Text style={{ color: 'blue' }}>GET LIST USERS</Text>
+              <TextNormal style={{ color: 'blue' }}>GET LIST USERS</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.GetSingleUser();
               }}
             >
-              <Text style={{ color: 'blue' }}>GET SINGLE USER</Text>
+              <TextNormal style={{ color: 'blue' }}>GET SINGLE USER</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.GetSingleUserNotFound();
               }}
             >
-              <Text style={{ color: 'blue' }}>GET SINGLE USER NOT FOUND</Text>
+              <TextNormal style={{ color: 'blue' }}>GET SINGLE USER NOT FOUND</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.GetListResource();
               }}
             >
-              <Text style={{ color: 'blue' }}>GET LIST &#60;RESOURCE&#62;</Text>
+              <TextNormal style={{ color: 'blue' }}>GET LIST &#60;RESOURCE&#62;</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.GetSingleResource();
               }}
             >
-              <Text style={{ color: 'blue' }}>GET SINGLE &#60;RESOURCE&#62;</Text>
+              <TextNormal style={{ color: 'blue' }}>GET SINGLE &#60;RESOURCE&#62;</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.GetSingleResourceNotFound();
               }}
             >
-              <Text style={{ color: 'blue' }}>GET SINGLE &#60;RESOURCE&#62; NOT FOUND</Text>
+              <TextNormal style={{ color: 'blue' }}>GET SINGLE &#60;RESOURCE&#62; NOT FOUND</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.PostCreate();
               }}
             >
-              <Text style={{ color: 'blue' }}>POST CREATE</Text>
+              <TextNormal style={{ color: 'blue' }}>POST CREATE</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.PutUpdate();
               }}
             >
-              <Text style={{ color: 'blue' }}>PUT UPDATE</Text>
+              <TextNormal style={{ color: 'blue' }}>PUT UPDATE</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.PatchUpdate();
               }}
             >
-              <Text style={{ color: 'blue' }}>PATCH UPDATE</Text>
+              <TextNormal style={{ color: 'blue' }}>PATCH UPDATE</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.DeleteDelete();
               }}
             >
-              <Text style={{ color: 'blue' }}>DELETE DELETE</Text>
+              <TextNormal style={{ color: 'blue' }}>DELETE DELETE</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.PostRegisterSuccessful();
               }}
             >
-              <Text style={{ color: 'blue' }}>POST REGISTER SUCCESSFUL</Text>
+              <TextNormal style={{ color: 'blue' }}>POST REGISTER SUCCESSFUL</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.PostRegisterUnSuccessful();
               }}
             >
-              <Text style={{ color: 'blue' }}>POST REGISTER UNSUCCESSFUL</Text>
+              <TextNormal style={{ color: 'blue' }}>POST REGISTER UNSUCCESSFUL</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.PostLoginSuccessful();
               }}
             >
-              <Text style={{ color: 'blue' }}>POST LOGIN SUCCESSFUL</Text>
+              <TextNormal style={{ color: 'blue' }}>POST LOGIN SUCCESSFUL</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.PostLoginUnSuccessful();
               }}
             >
-              <Text style={{ color: 'blue' }}>POST LOGIN UNSUCCESSFUL</Text>
+              <TextNormal style={{ color: 'blue' }}>POST LOGIN UNSUCCESSFUL</TextNormal>
             </TouchableOpacity>
             <TouchableOpacity
               style={{ marginBottom: 20 }}
@@ -306,50 +307,52 @@ class APIScreen extends React.Component {
                 this.GetDelayedResponse();
               }}
             >
-              <Text style={{ color: 'blue' }}>GET DELAYED RESPONSE</Text>
+              <TextNormal style={{ color: 'blue' }}>GET DELAYED RESPONSE</TextNormal>
             </TouchableOpacity>
             {(loading || loadingPost) && <Loading />}
             <Divider />
             <View style={{ paddingTop: 20, backgroundColor: '#e1f0ff' }}>
-              <Text style={{ fontWeight: 'bold', alignSelf: 'center', marginBottom: 10 }}>Kết quả</Text>
-              <Text style={{ fontWeight: 'bold', alignSelf: 'flex-start', marginBottom: 10 }}>
-                GET: <Text style={{ color: 'green' }}>{typeGet}</Text>
-              </Text>
-              {this.state.isShowDataGet && statusGet && <Text style={{ color: 'black' }}>status: {statusGet}</Text>}
-              <Text>
+              <TextNormal style={{ fontWeight: 'bold', alignSelf: 'center', marginBottom: 10 }}>Kết quả</TextNormal>
+              <TextNormal style={{ fontWeight: 'bold', alignSelf: 'flex-start', marginBottom: 10 }}>
+                GET: <TextNormal style={{ color: 'green' }}>{typeGet}</TextNormal>
+              </TextNormal>
+              {this.state.isShowDataGet && statusGet && (
+                <TextNormal style={{ color: 'black' }}>status: {statusGet}</TextNormal>
+              )}
+              <TextNormal>
                 {this.state.isShowDataGet && listUsers && listUsers.length > 0 && JSON.stringify(listUsers, null, 2)}
-              </Text>
-              <Text>
+              </TextNormal>
+              <TextNormal>
                 {this.state.isShowDataGet &&
                   singleUser &&
                   Object.keys(singleUser).length > 0 &&
                   JSON.stringify(singleUser, null, 2)}
-              </Text>
-              <Text style={{ color: 'red', marginBottom: 20 }}>
+              </TextNormal>
+              <TextNormal style={{ color: 'red', marginBottom: 20 }}>
                 {this.state.isShowDataGet && error && JSON.stringify(error, null, 2)}
-              </Text>
+              </TextNormal>
               {this.state.isShowDataGet && codeGet && (
-                <Text style={{ color: 'red' }}>code: {JSON.stringify(codeGet, null, 2)}</Text>
+                <TextNormal style={{ color: 'red' }}>code: {JSON.stringify(codeGet, null, 2)}</TextNormal>
               )}
               <Divider />
-              <Text style={{ marginTop: 20, fontWeight: 'bold', alignSelf: 'flex-start', marginBottom: 10 }}>
-                Action: <Text style={{ color: 'green' }}>{typePost}</Text>
-              </Text>
+              <TextNormal style={{ marginTop: 20, fontWeight: 'bold', alignSelf: 'flex-start', marginBottom: 10 }}>
+                Action: <TextNormal style={{ color: 'green' }}>{typePost}</TextNormal>
+              </TextNormal>
               {this.state.isShowDataPostPutPatchDelete && statusPost && (
-                <Text style={{ color: 'black' }}>status: {statusPost}</Text>
+                <TextNormal style={{ color: 'black' }}>status: {statusPost}</TextNormal>
               )}
               {userCreate && Object.keys(userCreate).length > 0 && (
                 <>
-                  <Text>{beautify(userCreate, null, 2, 100)}</Text>
+                  <TextNormal>{beautify(userCreate, null, 2, 100)}</TextNormal>
                 </>
               )}
 
               {this.state.isShowDataPostPutPatchDelete && errorCreate && (
-                <Text style={{ color: 'red' }}>{JSON.stringify(errorCreate, null, 2)} </Text>
+                <TextNormal style={{ color: 'red' }}>{JSON.stringify(errorCreate, null, 2)} </TextNormal>
               )}
 
               {this.state.isShowDataPostPutPatchDelete && codePost && (
-                <Text style={{ color: 'red' }}>code: {JSON.stringify(codePost, null, 2)}</Text>
+                <TextNormal style={{ color: 'red' }}>code: {JSON.stringify(codePost, null, 2)}</TextNormal>
               )}
             </View>
           </View>

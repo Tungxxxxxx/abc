@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, TextNormal, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Icon } from '@rneui/themed';
@@ -7,6 +7,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import PriceFormat from '../../component/PriceFormat';
 import ProductScreen from './ProductScreen';
 import { Checkbox, Dialog } from 'react-native-paper';
+import { TextNormal } from '../../component/TextCustom';
 class BagScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -89,12 +90,12 @@ class BagScreen extends React.Component {
                       this.handlePressAllCheck(shoppingBagsUserLogin);
                     }}
                   />
-                  <Text>{this.state.test}</Text>
+                  <TextNormal>{this.state.test}</TextNormal>
                 </View>
                 <View style={{ width: '33%', height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                  <Text style={{ color: 'red' }}>
+                  <TextNormal style={{ color: 'red' }}>
                     <PriceFormat price={this.sumPrices(shoppingBagsUserLogin)} />
-                  </Text>
+                  </TextNormal>
                 </View>
                 <View style={{ width: '33%', height: 30, alignItems: 'flex-end' }}>
                   <TouchableOpacity
@@ -117,7 +118,7 @@ class BagScreen extends React.Component {
                       }
                     }}
                   >
-                    <Text>Mua ngay</Text>
+                    <TextNormal>Mua ngay</TextNormal>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -154,17 +155,17 @@ class BagScreen extends React.Component {
                           />
                         </View>
                         <View>
-                          <Text style={{ marginBottom: 3, fontSize: 15 }}>{item.product.title}</Text>
+                          <TextNormal style={{ marginBottom: 3, fontSize: 15 }}>{item.product.title}</TextNormal>
                           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View>
-                              <Text style={{ marginBottom: 3, fontSize: 15, color: 'red' }}>
+                              <TextNormal style={{ marginBottom: 3, fontSize: 15, color: 'red' }}>
                                 <PriceFormat price={item.product.price} />
-                              </Text>
-                              <Text style={{ marginBottom: 3, fontSize: 15, color: 'red', fontStyle: 'italic' }}>
+                              </TextNormal>
+                              <TextNormal style={{ marginBottom: 3, fontSize: 15, color: 'red', fontStyle: 'italic' }}>
                                 {' '}
                                 -{item.product.saleOff}
-                              </Text>
-                              <Text style={{ marginBottom: 3, fontSize: 15 }}>Số lượng: {item.qty}</Text>
+                              </TextNormal>
+                              <TextNormal style={{ marginBottom: 3, fontSize: 15 }}>Số lượng: {item.qty}</TextNormal>
                             </View>
                             <Icon name="delete" color={'rgba(111, 202, 186, 1)'} size={25} />
                             <View
@@ -182,7 +183,7 @@ class BagScreen extends React.Component {
                                   });
                                 }}
                               >
-                                <Text
+                                <TextNormal
                                   style={{
                                     color: 'rgb(57, 58, 52)',
                                     fontSize: 15,
@@ -190,7 +191,7 @@ class BagScreen extends React.Component {
                                   }}
                                 >
                                   Mua ngay
-                                </Text>
+                                </TextNormal>
                               </TouchableOpacity>
                             </View>
                           </View>
@@ -203,7 +204,7 @@ class BagScreen extends React.Component {
             </>
           ) : (
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-              <Text>Chưa có sản phẩm nào</Text>
+              <TextNormal>Chưa có sản phẩm nào</TextNormal>
             </View>
           )}
         </View>
@@ -213,7 +214,7 @@ class BagScreen extends React.Component {
           style={{ backgroundColor: '#FCEDDA', justifyContent: 'center', alignItems: 'center' }}
         >
           <Dialog.Content>
-            <Text>Chưa chọn sản phẩm nào</Text>
+            <TextNormal>Chưa chọn sản phẩm nào</TextNormal>
           </Dialog.Content>
         </Dialog>
       </View>

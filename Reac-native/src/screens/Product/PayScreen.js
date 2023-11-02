@@ -7,7 +7,7 @@ import { Text, View, Image, StyleSheet, TouchableOpacity, Alert, FlatList } from
 //Icon
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //styles
-import { dividerStyle } from '../../styles';
+import { dividerStyle } from '../../styles/styles';
 //alert
 import { alertMess } from '../../component/ALertFunc';
 import * as Message from '../../common/Message';

@@ -13,8 +13,9 @@ import UserInfoScreen from './UserInfoScreen';
 import SupportScreen from './SupportScreen';
 import { Avatar } from 'react-native-paper';
 import * as Constant from '../../common/Constant';
-import { StatusBar, Text } from 'react-native';
+import { StatusBar } from 'react-native';
 import APIScreen from './APIScreen';
+import { TextNormal } from '../../component/TextCustom';
 const Tab = createMaterialTopTabNavigator();
 class Home extends React.Component {
   constructor(props) {
@@ -125,9 +126,9 @@ class Home extends React.Component {
             name="API"
             options={{
               tabBarIcon: ({ focused }) => (
-                <Text color={focused ? 'orange' : 'rgba(111, 202, 186, 1)'} style={{ fontSize: 15 }}>
+                <TextNormal color={focused ? 'orange' : 'rgba(111, 202, 186, 1)'} style={{ fontSize: 15 }}>
                   API
-                </Text>
+                </TextNormal>
               ),
               title: '',
               headerShown: false,
