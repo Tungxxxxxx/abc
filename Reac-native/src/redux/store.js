@@ -1,7 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 // Import các reducer
 import userReducer from './reducers/userReducer';
-import userLoginReducer from './reducers/userLoginReducer';
 import productReducer from './reducers/productReducer';
 import RatingReducer from './reducers/RatingReducer';
 import navigationReducer from './reducers/navigationReducer';
@@ -12,7 +11,6 @@ import middleware from './middleware/middleware';
 // Tạo reducer tổng
 const rootReducer = combineReducers({
   users: userReducer,
-  userLogin: userLoginReducer,
   products: productReducer,
   ratings: RatingReducer,
   navigation: navigationReducer,

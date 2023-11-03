@@ -11,6 +11,7 @@ import { Icon } from '@rneui/themed';
 import { connect } from 'react-redux';
 import IconWithBadge from '../../component/IconWithBadge';
 import HTML from 'react-native-render-html';
+import { TextNormal, TextItalic, TextBold } from '../../component/TextCustom';
 const { width } = Dimensions.get('window');
 const screenWidth = width;
 class ProductDetail extends React.Component {
@@ -89,23 +90,14 @@ class ProductDetail extends React.Component {
               </View>
               <View style={{ width: '100%', marginBottom: 150 }}>
                 <Divider style={{ backgroundColor: 'orange', marginTop: 10, marginBottom: 10 }} />
-                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Mô tả sản phẩm</Text>
-                <HTML
-                  source={{
-                    html: `
-      <style>
-        p::first-line {
-          text-indent: 20px;
-        }
-      </style>
-      <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;${product.description}</p>
-    `,
-                  }}
-                  contentWidth={width}
-                />
+                <TextBold style={{ fontSize: 20, fontWeight: 'bold' }}>Mô tả sản phẩm</TextBold>
+                <TextNormal>
+                  {'   '}
+                  {product.description}
+                </TextNormal>
                 <Divider style={{ backgroundColor: 'orange', marginTop: 10, marginBottom: 10 }} />
                 <View>
-                  <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Đánh giá</Text>
+                  <TextNormal style={{ fontSize: 20, fontWeight: 'bold' }}>Đánh giá</TextNormal>
                   <Ratings product={product} />
                 </View>
               </View>

@@ -4,6 +4,7 @@ import RatingComponent from '../../component/RatingComponent';
 import { View, Text, FlatList, Image } from 'react-native';
 import { Avatar, Divider } from 'react-native-paper';
 import { Rating } from 'react-native-elements';
+import { TextBold, TextItalic, TextNormal } from '../../component/TextCustom';
 
 class Ratings extends React.Component {
   getRatingsForProduct = (product, ratings) => {
@@ -37,12 +38,12 @@ class Ratings extends React.Component {
                   startingValue={item.rate} // Giá trị xếp hạng mặc định (không cần dấu ngoặc kép)
                   imageSize={16}
                 />
-                <Text> {item.dateComment}</Text>
+                <TextNormal> {item.dateComment}</TextNormal>
               </View>
               <View style={{ width: '100%', height: 100 }}>
                 <Image resizeMode="contain" style={{ width: '25%', height: '90%' }} source={item.images[0].path} />
               </View>
-              <Text>{item.description}</Text>
+              <TextNormal>{item.description}</TextNormal>
               <Divider />
             </View>
           )}

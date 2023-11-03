@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Divider } from 'react-native-paper';
 import ProductModal from './ProductModal';
 import * as Constant from '../common/Constant';
+import { TextNormal } from './TextCustom';
 class BottomBar extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +37,7 @@ class BottomBar extends React.Component {
         </View>
         <View style={styles.buyButton}>
           <TouchableOpacity onPress={() => this.handleOpenModal(Constant.MUA_NGAY)}>
-            <Text style={{ color: '#EE4E34' }}>Mua ngay</Text>
+            <TextNormal style={{ color: '#EE4E34' }}>Mua ngay</TextNormal>
           </TouchableOpacity>
         </View>
         {visibility ? (

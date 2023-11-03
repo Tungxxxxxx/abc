@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-class Signin extends React.Component {
+import { TextBold, TextItalic, TextNormal } from '../../component/TextCustom';
+class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,12 +12,16 @@ class Signin extends React.Component {
       email: '',
     };
   }
+  handleChangeUsername = (val) => {};
+  handleChangePass = (val) => {};
+  handleChangeEmail = (val) => {};
+  handleChangePhone = (val) => {};
   render() {
     const { username, pass, phone, email } = this.state;
     return (
       <View>
         <TextInput
-          style={{ marginTop: 10 }}
+          style={styles.textInput}
           label="Tài khoản"
           mode="outlined"
           right={<TextInput.Icon icon={'account'} />}
@@ -27,7 +32,7 @@ class Signin extends React.Component {
           }}
         />
         <TextInput
-          style={{ marginTop: 10 }}
+          style={styles.textInput}
           label="Mật khẩu"
           mode="outlined"
           secureTextEntry
@@ -38,25 +43,25 @@ class Signin extends React.Component {
           }}
         />
         <TextInput
-          style={{ marginTop: 10 }}
+          style={styles.textInput}
           label="Email"
           mode="outlined"
           secureTextEntry
           right={<TextInput.Icon icon={'email'} />}
-          value={pass}
+          value={email}
           onChangeText={(val) => {
-            this.handleChangePass(val);
+            this.handleChangeEmail(val);
           }}
         />
         <TextInput
-          style={{ marginTop: 10 }}
+          style={styles.textInput}
           label="Số điện thoại"
           mode="outlined"
           secureTextEntry
           right={<TextInput.Icon icon={'phone'} />}
-          value={pass}
+          value={phone}
           onChangeText={(val) => {
-            this.handleChangePass(val);
+            this.handleChangePhone(val);
           }}
         />
         <Button
@@ -65,10 +70,16 @@ class Signin extends React.Component {
             this.props.handleLogin(username, pass);
           }}
         >
-          <Text style={{ color: 'rgb(57, 58, 52)' }}>Đăng ký</Text>
+          <TextNormal style={{ color: 'rgb(57, 58, 52)' }}>Đăng ký</TextNormal>
         </Button>
       </View>
     );
   }
 }
-export default Signin;
+const styles = StyleSheet.create({
+  textInput: {
+    marginTop: 10,
+    fontFamily: 'Nunito_ExtraLight',
+  },
+});
+export default Signup;

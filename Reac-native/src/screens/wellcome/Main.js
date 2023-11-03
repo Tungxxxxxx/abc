@@ -20,7 +20,8 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import { IP } from '../../common/Constant';
 import { connectSocketIO } from '../../redux/action/connectSocketIO';
-import { getLoginUser } from '../../redux/action/getLoginUser';
+import { updateUserLogin } from '../../redux/action/updateUserLogin';
+import { TextBold, TextItalic, TextNormal } from '../../component/TextCustom';
 var e;
 class Main extends React.Component {
   constructor(props) {
@@ -98,7 +99,7 @@ class Main extends React.Component {
       return;
     }
     //Gửi action tới redux, lưu giá trị usẻ vừa login thành công vào store
-    this.props.getLoginUser(foundUser[0]);
+    this.props.updateUserLogin(foundUser[0]);
     this.setState({
       userLogin: foundUser[0],
     });
@@ -143,7 +144,7 @@ class Main extends React.Component {
               this.handleClickLogin();
             }}
           >
-            <Text style={{ color: 'rgb(57, 58, 52)', fontSize: 20 }}>Đăng nhập</Text>
+            <TextNormal style={{ color: 'rgb(57, 58, 52)', fontSize: 20 }}>Đăng nhập</TextNormal>
             {page === 'LOG_IN' ? (
               <View
                 style={{
@@ -166,7 +167,7 @@ class Main extends React.Component {
               this.handleClickSignup();
             }}
           >
-            <Text style={{ color: 'rgb(57, 58, 52)', fontSize: 20 }}>Đăng ký</Text>
+            <TextNormal style={{ color: 'rgb(57, 58, 52)', fontSize: 20 }}>Đăng ký</TextNormal>
             {page === 'SIGN_UP' ? (
               <View
                 style={{
@@ -207,15 +208,6 @@ const styles = StyleSheet.create({
 });
 // ghi dữ liệu từ state của redux vào props của component
 const mapStateToProps = (state) => {
-  return { users: state.users.users, userLogin: state.userLogin.userLogin };
+  return { users: state.users.users, userLogin: state.users.userLogin };
 };
-// // gửi actions tới store của redux và thêm nó vào props của component, sau khi gửi thì redux nhận action ở hàm rootReducer(state,action)
-// const mapDispatchToProps = (disPatch) => {
-//   //Trả về một đối tượng
-//   return {
-//     // dispatch 1 đối tượng có thuộc tính type: tên action và payload
-//     SetLoginUser: (userLogin) => disPatch({ type: 'SET_USER_LOGIN', payload: { userLogin: userLogin } }),
-//     connectUsers,
-//   };
-// };
-export default connect(mapStateToProps, { getLoginUser, connectSocketIO })(Main);
+export default connect(mapStateToProps, { updateUserLogin, connectSocketIO })(Main);

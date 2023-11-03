@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
 import { Button, Divider } from 'react-native-paper';
+import DividerComponent from '../../component/DividerComponent';
 import { connect } from 'react-redux';
 import { getRandomNumber } from '../../utils/function';
 import PriceFormat from '../../component/PriceFormat';
+import { TextBold, TextItalic, TextNormal } from '../../component/TextCustom';
+// import { v4 as uuidv4 } from 'uuid';
+// import 'react-native-get-random-values';
+import uuid from 'react-native-uuid';
 
 class OrderScreen extends React.Component {
   constructor(props) {
@@ -20,9 +25,10 @@ class OrderScreen extends React.Component {
     return (
       <View style={{ width: '100%', flex: 1 }}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={userLogin.orders}
           numColumns={1}
-          keyExtractor={() => getRandomNumber(99)}
+          keyExtractor={() => uuid.v4()}
           renderItem={({ item }) => (
             <View style={{ padding: 10 }}>
               <View>
@@ -30,32 +36,32 @@ class OrderScreen extends React.Component {
                   scrollEnabled={false}
                   data={item.products}
                   numColumns={1}
-                  keyExtractor={() => getRandomNumber(999)}
+                  keyExtractor={() => uuid.v4()}
                   renderItem={({ item }) => (
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Image style={{ width: 70, height: 70 }} source={item.product.avatar} />
                       <View style={{ flexDirection: 'column' }}>
-                        <Text>{item.product.title}</Text>
-                        <Text>
+                        <TextNormal>{item.product.title}</TextNormal>
+                        <TextNormal style={{ color: 'red' }}>
                           <PriceFormat price={item.product.price} />
-                        </Text>
-                        <Text>Số lượng: {item.qty}</Text>
+                        </TextNormal>
+                        <TextNormal>Số lượng: {item.qty}</TextNormal>
                       </View>
                     </View>
                   )}
                 />
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={{ fontFamily: 'Nunito_LightItalic' }}>Tổng thanh toán</Text>
-                <Text>
+                <TextNormal>Tổng thanh toán</TextNormal>
+                <TextNormal style={{ color: 'red' }}>
                   <PriceFormat price={item.payments} />
-                </Text>
+                </TextNormal>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={{ fontFamily: 'Nunito_LightItalic' }}>Tình trạng</Text>
-                <Text>{item.status}</Text>
+                <TextNormal>Tình trạng</TextNormal>
+                <TextItalic>{item.status}</TextItalic>
               </View>
-              <Divider />
+              <DividerComponent bgColor={'orange'} width={'100%'} height={1} />
             </View>
           )}
         />
@@ -64,6 +70,6 @@ class OrderScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { userLogin: state.userLogin.userLogin, products: state.products.products, users: state.users.users };
+  return { userLogin: state.users.userLogin, products: state.products.products, users: state.users.users };
 };
 export default connect(mapStateToProps)(OrderScreen);

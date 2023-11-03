@@ -11,6 +11,7 @@ import * as Constant from '../common/Constant';
 import AnimatingImage from './AnimatingImage';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Modal as Modals } from 'react-native-paper';
+import { TextNormal } from './TextCustom';
 const screenHeight = Dimensions.get('window').height;
 class ProductModal extends React.Component {
   constructor(props) {
@@ -104,9 +105,9 @@ class ProductModal extends React.Component {
                       }}
                     />
                   </TouchableOpacity>
-                  <Text style={{ color: 'red' }}>
+                  <TextNormal style={{ color: 'red' }}>
                     <PriceFormat price={product.price} />
-                  </Text>
+                  </TextNormal>
                 </View>
                 <Divider style={{ marginBottom: 10, marginTop: 10 }} />
                 <TouchableOpacity
@@ -116,7 +117,7 @@ class ProductModal extends React.Component {
                   <Icon name="clear" size={30} />
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text>Số lượng</Text>
+                  <TextNormal>Số lượng</TextNormal>
                   <AddQty upDateQty={this.upDateQty} />
                 </View>
                 <Divider style={{ marginBottom: 30, marginTop: 10 }} />
@@ -145,7 +146,7 @@ class ProductModal extends React.Component {
                     }}
                     disabled={animatingRef !== null ? animatingRef.setIsAnimatingToParent() : false}
                   >
-                    <Text>{textSubmit}</Text>
+                    <TextNormal>{textSubmit}</TextNormal>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-  return { countPIB: state.users.countPIB, users: state.users, userLogin: state.userLogin.userLogin };
+  return { countPIB: state.users.countPIB, users: state.users, userLogin: state.users.userLogin };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

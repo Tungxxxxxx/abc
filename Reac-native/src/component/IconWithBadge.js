@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { connect } from 'react-redux';
 import { event } from 'react-native-reanimated';
+import { TextNormal } from './TextCustom';
 class IconWithBadge extends React.Component {
   constructor(props) {
     super(props);

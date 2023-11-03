@@ -1,5 +1,5 @@
 import * as Constant from '../../common/Constant';
-
+import { getUserLogin } from '../../utils/function';
 //Danh sách user
 const initStateUsers = {
   users: [
@@ -12,7 +12,7 @@ const initStateUsers = {
       name: 'Phạm Thanh Tùng',
       nickname: 'Tùng Phạm',
       address: '100 - đường Mỹ Đình - Nam Từ Liêm - Hà Nội',
-      money: 10000000000000,
+      money: 100000000,
       avatar: require('../../assets/images/tungpt.png'),
       shoppingBags: [],
       countProductInBag: 0,
@@ -44,7 +44,7 @@ const initStateUsers = {
       name: 'Sở Lưu Hương',
       nickname: 'Hương Sở',
       address: '232 - đường Bạch Mai - Minh Khai - Hà Nội',
-      money: 99999999999999,
+      money: 20000000,
       avatar: require('../../assets/images/tx2.jpg'),
       shoppingBags: [],
       countProductInBag: 0,
@@ -59,7 +59,7 @@ const initStateUsers = {
       name: 'Ái Tân Giác La',
       nickname: 'Huyền Diệp',
       address: '111 - Trần Khát Chân - Ba Đình - Hà Nội',
-      money: 898999999,
+      money: 10000000,
       avatar: require('../../assets/images/tx3.jpg'),
       shoppingBags: [],
       countProductInBag: 0,
@@ -67,9 +67,10 @@ const initStateUsers = {
     },
   ],
   shoppingBagsUserLogin: [],
+  userLogin: {},
 };
 function GetUsersAddedProduct(state, action) {
-  if (action.type !== Constant.UPDATE_ORDERS) {
+  if (action.type === Constant.ADD_PRODUCT_BAG || action.type === Constant.ADD_QTY_TO_BAG) {
     const userLogin = action.payload.userLogin;
     const qty = action.payload.qty;
     const usersCopy = [...state.users];
@@ -94,9 +95,9 @@ function GetUsersAddedProduct(state, action) {
     };
   } else {
     return {
-      usersAddedProduct: null,
-      shoppingBagsUserLogin: null,
-      countPIB: null,
+      usersAddedProduct: [],
+      shoppingBagsUserLogin: [],
+      countPIB: 0,
     };
   }
 }
@@ -108,23 +109,34 @@ function getUserUpdatedOrder(state, action) {
   usersCopy[index].orders.push(order);
   return usersCopy;
 }
+function getUsersUpdatedWallet(state, action) {
+  const userId = action.payload.userId;
+  const change = action.payload.change;
+  const usersCopy = [...state.users];
+  const index = usersCopy.findIndex((user) => user.id === userId);
+  usersCopy[index].money = usersCopy[index].money - change;
+  // console.log('>>>>>>>>>>>>>>>>>>>>>>usersCopy[index]', usersCopy[index]);
+  return usersCopy;
+}
 
 const userReducer = (state = initStateUsers, action) => {
-  if (Constant.USER_ACTION.includes(action.type)) {
-    const { usersAddedProduct, shoppingBagsUserLogin, countPIB } = GetUsersAddedProduct(state, action);
-    switch (action.type) {
-      case Constant.ADD_PRODUCT_BAG:
-        return { ...state, users: usersAddedProduct, shoppingBagsUserLogin: shoppingBagsUserLogin, countPIB: countPIB };
-      case Constant.ADD_QTY_TO_BAG:
-        return { ...state, users: usersAddedProduct, shoppingBagsUserLogin: shoppingBagsUserLogin, countPIB: countPIB };
-      case Constant.UPDATE_ORDERS:
-        const users = getUserUpdatedOrder(state, action);
-        return { ...state, users: users };
-      default:
-        return state;
-    }
-  } else {
-    return state;
+  const { usersAddedProduct, shoppingBagsUserLogin, countPIB } = GetUsersAddedProduct(state, action);
+  switch (action.type) {
+    case Constant.ADD_PRODUCT_BAG:
+      return { ...state, users: usersAddedProduct, shoppingBagsUserLogin: shoppingBagsUserLogin, countPIB: countPIB };
+    case Constant.ADD_QTY_TO_BAG:
+      return { ...state, users: usersAddedProduct, shoppingBagsUserLogin: shoppingBagsUserLogin, countPIB: countPIB };
+    case Constant.UPDATE_ORDERS:
+      const users = getUserUpdatedOrder(state, action);
+      return { ...state, users: users };
+    case Constant.UPDATE_WALLET:
+      const usersWallet = getUsersUpdatedWallet(state, action);
+      return { ...state, users: usersWallet };
+    case Constant.LOGIN_USER:
+      console.log('LOGIN_USER', action.payload.money);
+      return { ...state, userLogin: action.payload };
+    default:
+      return state;
   }
 };
 

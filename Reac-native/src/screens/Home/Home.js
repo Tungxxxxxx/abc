@@ -153,7 +153,7 @@ class Home extends React.Component {
 }
 // ghi dữ liệu từ state của redux vào props của component
 const mapStateToProps = (state) => {
-  return { countPIB: state.users.countPIB, users: state.users, userLogin: state.userLogin.userLogin };
+  return { countPIB: state.users.countPIB, users: state.users, userLogin: state.users.userLogin };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

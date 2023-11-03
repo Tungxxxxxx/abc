@@ -16,6 +16,10 @@ import { KIEM_TRA_DON_HANG, NAP_TIEN, LOGIN_USER } from '../../common/Constant';
 import { updateOrders } from '../../redux/action/updateOrders';
 import { updateUserLogin } from '../../redux/action/updateUserLogin';
 import { getUserLogin } from '../../utils/function';
+import { updateWallet } from '../../redux/action/updateUserDetails';
+import { TextNormal, TextItalic, TextBold } from '../../component/TextCustom';
+import { v4 as uuidv4 } from 'uuid';
+import 'react-native-get-random-values';
 class PayScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +31,10 @@ class PayScreen extends React.Component {
     };
   }
 
-  handlePay = (payments, wallet) => {
+  handlePay = async (payments, wallet) => {
+    const { userLogin, users } = this.props;
+    const userId = userLogin.id;
+    console.log('userLogin.money1111111', userLogin.money);
     const walletBalance = wallet - payments;
     if (walletBalance >= 0) {
       this.setState({
@@ -44,8 +51,11 @@ class PayScreen extends React.Component {
         payments: payments,
         status: 'Chờ lấy hàng',
       };
-      this.props.updateOrders(order, this.props.userLogin.id);
-      this.props.updateUserLogin(getUserLogin(this.props.users, this.props.userLogin.id));
+      this.props.updateWallet(userId, payments);
+
+      this.props.updateOrders(order, userId);
+      await this.props.updateUserLogin(getUserLogin(users, userId));
+      console.log('userLogin.money', userLogin.money);
     } else {
       this.setState({
         visibleDialog: true,
@@ -68,6 +78,7 @@ class PayScreen extends React.Component {
     return sum;
   };
   render() {
+    console.log('PayScreen', this.props.userLogin.money);
     try {
       if (!this.props.userLogin) {
         this.props.navigation.navigate('Main');
@@ -82,9 +93,9 @@ class PayScreen extends React.Component {
           <View style={styles.address}>
             <View style={styles.addressHeader}>
               <Icon name="location-pin" size={24} color={'rgba(111, 202, 186, 1)'} />
-              <Text>Địa chỉ nhận hàng</Text>
+              <TextNormal>Địa chỉ nhận hàng</TextNormal>
             </View>
-            <Text>{userLogin.address}</Text>
+            <TextNormal>{userLogin.address}</TextNormal>
           </View>
           <Divider style={dividerStyle} />
           <FlatList
@@ -97,11 +108,11 @@ class PayScreen extends React.Component {
                 <View style={styles.product}>
                   <Image style={styles.productImage} source={item.product.avatar} />
                   <View style={styles.productContent}>
-                    <Text>{item.product.title}</Text>
-                    <Text>
+                    <TextNormal>{item.product.title}</TextNormal>
+                    <TextNormal>
                       <PriceFormat price={item.product.price} />
-                    </Text>
-                    <Text>Số lượng: {item.qty}</Text>
+                    </TextNormal>
+                    <TextNormal>Số lượng: {item.qty}</TextNormal>
                   </View>
                 </View>
               );
@@ -113,40 +124,40 @@ class PayScreen extends React.Component {
             <View style={styles.payDetailItem}>
               <View style={styles.payDetailHeader}>
                 <MaterialCommunityIcons name="view-list-outline" size={24} color={'rgba(111, 202, 186, 1)'} />
-                <Text>Chi tiết thanh toán</Text>
+                <TextNormal>Chi tiết thanh toán</TextNormal>
               </View>
             </View>
             <View style={styles.payDetailItem}>
-              <Text>Tổng tiền hàng</Text>
-              <Text>
+              <TextNormal>Tổng tiền hàng</TextNormal>
+              <TextNormal>
                 <PriceFormat price={goodsMoney} />
-              </Text>
+              </TextNormal>
             </View>
             <View style={styles.payDetailItem}>
-              <Text>Phí vận chuyển</Text>
-              <Text>
+              <TextNormal>Phí vận chuyển</TextNormal>
+              <TextNormal>
                 <PriceFormat price={shipFee} />
-              </Text>
+              </TextNormal>
             </View>
             <View style={styles.payDetailItem}>
-              <Text style={{ fontWeight: 'bold' }}>Tổng thanh toán</Text>
-              <Text style={{ color: 'red' }}>
+              <TextBold>Tổng thanh toán</TextBold>
+              <TextNormal style={{ color: 'red' }}>
                 <PriceFormat price={payments} />
-              </Text>
+              </TextNormal>
             </View>
           </View>
           <Divider style={dividerStyle} />
           <View style={styles.wallet}>
-            <Text>Số dư ví</Text>
-            <Text style={{ color: 'green' }}>
+            <TextNormal>Số dư ví</TextNormal>
+            <TextNormal style={{ color: 'green' }}>
               <PriceFormat price={userLogin.money} />
-            </Text>
+            </TextNormal>
           </View>
           <View style={styles.wallet}>
-            <Text>Còn lại</Text>
-            <Text style={{ color: userLogin.money - payments >= 0 ? 'green' : 'red' }}>
+            <TextNormal>Còn lại</TextNormal>
+            <TextNormal style={{ color: userLogin.money - payments >= 0 ? 'green' : 'red' }}>
               <PriceFormat price={userLogin.money - payments} />
-            </Text>
+            </TextNormal>
           </View>
           <Divider style={dividerStyle} />
           <View style={styles.submit}>
@@ -156,7 +167,7 @@ class PayScreen extends React.Component {
                 this.handlePay(payments, userLogin.money);
               }}
             >
-              <Text>Đặt hàng</Text>
+              <TextNormal>Đặt hàng</TextNormal>
             </TouchableOpacity>
           </View>
           <AlertMess
@@ -173,9 +184,9 @@ class PayScreen extends React.Component {
     } catch (error) {
       return (
         <View>
-          <Text>App đang được bảo trì:</Text>
-          <Text>{error.message}</Text>
-          <Text>{JSON.stringify(this.props.route.params)}</Text>
+          <TextNormal>App đang được bảo trì:</TextNormal>
+          <TextNormal>{error.message}</TextNormal>
+          <TextNormal>{JSON.stringify(this.props.route.params)}</TextNormal>
         </View>
       );
     }
@@ -202,7 +213,11 @@ const styles = StyleSheet.create({
   wallet: { width: '100%', flexDirection: 'row', justifyContent: 'space-between' },
 });
 const mapStateToProps = (state) => {
-  return { userLogin: state.userLogin.userLogin, navigation: state.navigation.navigation, users: state.users.users };
+  return {
+    userLogin: state.users.userLogin,
+    navigation: state.navigation.navigation,
+    users: state.users.users,
+  };
 };
 
-export default connect(mapStateToProps, { updateOrders, updateUserLogin })(PayScreen);
+export default connect(mapStateToProps, { updateOrders, updateUserLogin, updateWallet })(PayScreen);

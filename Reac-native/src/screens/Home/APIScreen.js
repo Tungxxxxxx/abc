@@ -21,7 +21,7 @@ import { fetchPostLoginUnSuccessful } from '../../redux/action/postLoginUnSucces
 import Loading from '../../component/Loading';
 import { Divider } from 'react-native-paper';
 import { Linking } from 'react-native';
-import { TextNormal } from '../../component/TextCustom';
+import { TextBold, TextNormal } from '../../component/TextCustom';
 class APIScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -312,10 +312,10 @@ class APIScreen extends React.Component {
             {(loading || loadingPost) && <Loading />}
             <Divider />
             <View style={{ paddingTop: 20, backgroundColor: '#e1f0ff' }}>
-              <TextNormal style={{ fontWeight: 'bold', alignSelf: 'center', marginBottom: 10 }}>Kết quả</TextNormal>
-              <TextNormal style={{ fontWeight: 'bold', alignSelf: 'flex-start', marginBottom: 10 }}>
+              <TextBold style={{ alignSelf: 'center', marginBottom: 10 }}>Kết quả</TextBold>
+              <TextBold style={{ alignSelf: 'flex-start', marginBottom: 10 }}>
                 GET: <TextNormal style={{ color: 'green' }}>{typeGet}</TextNormal>
-              </TextNormal>
+              </TextBold>
               {this.state.isShowDataGet && statusGet && (
                 <TextNormal style={{ color: 'black' }}>status: {statusGet}</TextNormal>
               )}

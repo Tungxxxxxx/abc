@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import { IP } from '../../common/Constant';
 import { Avatar, Divider } from 'react-native-paper';
+import { TextBold, TextNormal } from '../../component/TextCustom';
+import PriceFormat from '../../component/PriceFormat';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 var e;
 class UserInfoScreen extends React.Component {
@@ -13,6 +16,7 @@ class UserInfoScreen extends React.Component {
     e = this;
     this.state = {
       users: [],
+      userLogin: this.props.userLogin,
     };
     this.socket = io(IP);
   }
@@ -20,43 +24,56 @@ class UserInfoScreen extends React.Component {
     this.props.navigation.navigate('Main');
     this.socket.emit('logout', this.props.userLogin);
   };
-  handleLogin = () => {
-    // this.socket.emit('login', this.props.userLogin);
+  accessTopUpWallet = (balance) => {
+    const { navigation } = this.props;
+    navigation.navigate('TopUpWallet', { balance: balance });
   };
-  componentDidMount() {
-    this.socket.on('userConnects', (users) => {
-      e.setState({
-        users: users,
-      });
-    });
+  componentDidUpdate(prevProps) {
+    if (prevProps.userLogin !== this.props.userLogin) {
+      this.setState({ userLogin: this.props.userLogin });
+    }
   }
   render() {
-    const { userLogin } = this.props;
+    const { userLogin, navigation } = this.state;
+    console.log('UserInfoScreen', userLogin.money);
     return (
       <View style={{ paddingTop: 10, paddingLeft: 5, paddingRight: 5, paddingBottom: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Avatar.Image size={40} source={userLogin.avatar} />
-          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.nickname}</Text>
+          <TextNormal>{userLogin.nickname}</TextNormal>
+        </View>
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+        <TouchableOpacity style={{ width: '100%' }} onPress={(balance) => this.accessTopUpWallet(userLogin.money)}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View>
+              <TextBold>Số dư ví</TextBold>
+              <TextNormal>
+                <PriceFormat price={userLogin.money} />
+              </TextNormal>
+            </View>
+            <Ionicons size={20} name="chevron-forward-outline" color={'grey'} family={'Nunito_ExtraLight'} />
+          </View>
+        </TouchableOpacity>
+
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+        <TouchableOpacity style={{ width: '100%' }} onPress={(balance) => this.accessTopUpWallet(userLogin.money)}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View>
+              <TextBold>Địa chỉ</TextBold>
+              <TextNormal>{userLogin.address}</TextNormal>
+            </View>
+            <Ionicons size={20} name="chevron-forward-outline" color={'grey'} family={'Nunito_ExtraLight'} />
+          </View>
+        </TouchableOpacity>
+        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+        <View>
+          <TextBold>Họ và tên</TextBold>
+          <TextNormal>{userLogin.name}</TextNormal>
         </View>
         <Divider style={{ marginTop: 10, marginBottom: 10 }} />
         <View>
-          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Số dư ví</Text>
-          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.money}</Text>
-        </View>
-        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-        <View>
-          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Địa chỉ</Text>
-          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.address}</Text>
-        </View>
-        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-        <View>
-          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Họ và tên</Text>
-          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.name}</Text>
-        </View>
-        <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-        <View>
-          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>Email</Text>
-          <Text style={{ fontFamily: 'Nunito_Regular' }}>{userLogin.email}</Text>
+          <TextBold>Email</TextBold>
+          <TextNormal>{userLogin.email}</TextNormal>
         </View>
         <Divider style={{ marginTop: 10, marginBottom: 10 }} />
         <View>
@@ -65,7 +82,7 @@ class UserInfoScreen extends React.Component {
               this.handleLogout();
             }}
           >
-            <Text style={{ fontFamily: 'Nunito_ExtraBold', color: 'red' }}>Đăng xuất</Text>
+            <TextBold style={{ color: 'red' }}>Đăng xuất</TextBold>
           </TouchableOpacity>
         </View>
       </View>
@@ -73,7 +90,7 @@ class UserInfoScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation, userLogin: state.userLogin.userLogin };
+  return { ToReRendering: state, navigation: state.navigation.navigation, userLogin: state.users.userLogin };
 };
 
 export default connect(mapStateToProps)(UserInfoScreen);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextNormal, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Icon } from '@rneui/themed';
@@ -7,7 +7,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import PriceFormat from '../../component/PriceFormat';
 import ProductScreen from './ProductScreen';
 import { Checkbox, Dialog } from 'react-native-paper';
-import { TextNormal } from '../../component/TextCustom';
+import { TextNormal, TextItalic } from '../../component/TextCustom';
 class BagScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -161,10 +161,10 @@ class BagScreen extends React.Component {
                               <TextNormal style={{ marginBottom: 3, fontSize: 15, color: 'red' }}>
                                 <PriceFormat price={item.product.price} />
                               </TextNormal>
-                              <TextNormal style={{ marginBottom: 3, fontSize: 15, color: 'red', fontStyle: 'italic' }}>
+                              <TextItalic style={{ marginBottom: 3, fontSize: 15, color: 'red' }}>
                                 {' '}
                                 -{item.product.saleOff}
-                              </TextNormal>
+                              </TextItalic>
                               <TextNormal style={{ marginBottom: 3, fontSize: 15 }}>Số lượng: {item.qty}</TextNormal>
                             </View>
                             <Icon name="delete" color={'rgba(111, 202, 186, 1)'} size={25} />
@@ -222,6 +222,6 @@ class BagScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { shoppingBagsUserLogin: state.userLogin.userLogin.shoppingBags, navigation: state.navigation.navigation };
+  return { shoppingBagsUserLogin: state.users.userLogin.shoppingBags, navigation: state.navigation.navigation };
 };
 export default connect(mapStateToProps)(BagScreen);

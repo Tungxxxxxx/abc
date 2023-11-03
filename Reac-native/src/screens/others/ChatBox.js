@@ -2,6 +2,7 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text, View, Image, TextInput } from 'react-native';
 import { connect } from 'react-redux';
+import { TextBold, TextNormal } from '../../component/TextCustom';
 class ChatBox extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +38,7 @@ class ChatBox extends React.Component {
             }}
           />
           <Image source={user && user.avatar} style={{ width: 30, height: 30, borderRadius: 15, marginRight: 10 }} />
-          <Text style={{ fontFamily: 'Nunito_ExtraBold' }}>{user && user.name}</Text>
+          <TextBold>{user && user.name}</TextBold>
         </View>
         <View
           style={{

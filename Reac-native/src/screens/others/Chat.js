@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { TextNormal } from '../../component/TextCustom';
 
 class Chat extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Chat extends React.Component {
   render() {
     return (
       <View>
-        <Text>Chat Screen</Text>
+        <TextNormal>Chat Screen</TextNormal>
         <ScrollView></ScrollView>
       </View>
     );

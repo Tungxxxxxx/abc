@@ -3,6 +3,7 @@ import { ActivityIndicator, Alert, View, Text, TouchableOpacity, Image } from 'r
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { TextInput, Button } from 'react-native-paper';
 import { Icon } from '@rneui/themed';
+import { TextBold, TextItalic, TextNormal } from '../../component/TextCustom';
 
 import Loading from '../../component/Loading';
 import { Divider } from '@rneui/themed';
@@ -87,7 +88,9 @@ class Login extends React.Component {
               this.handleClickForgetPass();
             }}
           >
-            <Text style={{ color: forgetPass ? 'rgb(227, 17, 108)' : 'rgb(0, 0, 159)' }}>Quên mật khẩu</Text>
+            <TextNormal style={{ color: forgetPass ? 'rgb(227, 17, 108)' : 'rgb(0, 0, 159)' }}>
+              Quên mật khẩu
+            </TextNormal>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -97,7 +100,7 @@ class Login extends React.Component {
               this.props.handleLogin(username, pass);
             }}
           >
-            <Text style={{ color: 'rgb(57, 58, 52)' }}>Đăng nhập</Text>
+            <TextNormal style={{ color: 'rgb(57, 58, 52)' }}>Đăng nhập</TextNormal>
           </Button>
           <View style={{ alignItems: 'center', width: '20%' }}>
             <Icon name="fingerprint" color={'rgba(111, 202, 186, 1)'} size={50} />
@@ -105,7 +108,7 @@ class Login extends React.Component {
         </View>
         <View style={{ height: 50, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <Divider style={{ height: 2, width: '20%', color: 'blue' }} />
-          <Text>Hoặc đăng nhập với</Text>
+          <TextNormal>Hoặc đăng nhập với</TextNormal>
           <Divider style={{ height: 2, width: '20%' }} />
         </View>
         <View

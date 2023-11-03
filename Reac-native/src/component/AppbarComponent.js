@@ -64,6 +64,6 @@ class AppbarComponent extends React.Component {
 }
 // ghi dữ liệu từ state của redux vào props của component
 const mapStateToProps = (state) => {
-  return { users: state.users.users, userLogin: state.userLogin.userLogin };
+  return { users: state.users.users, userLogin: state.users.userLogin };
 };
 export default connect(mapStateToProps, null)(AppbarComponent);

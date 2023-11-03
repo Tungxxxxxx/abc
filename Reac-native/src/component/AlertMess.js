@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import { TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { KIEM_TRA_DON_HANG, NAP_TIEN } from '../common/Constant';
+import { TextBold, TextItalic, TextNormal } from './TextCustom';
 class AlertMess extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +25,7 @@ class AlertMess extends React.Component {
       <Portal>
         <Dialog visible={visibleDialog} onDismiss={this.props.hideDialog} style={styles.container}>
           <Dialog.Content>
-            <Text style={styles.contentStyle}>{content}</Text>
+            <TextNormal style={styles.contentStyle}>{content}</TextNormal>
           </Dialog.Content>
           {button1 ? (
             <Dialog.Actions>
@@ -35,7 +36,7 @@ class AlertMess extends React.Component {
                     this.handlePressButton(button1);
                   }}
                 >
-                  <Text style={styles.buttontext}>{button1}</Text>
+                  <TextNormal style={styles.buttontext}>{button1}</TextNormal>
                 </TouchableOpacity>
                 {/* <TouchableOpacity>
                 <Text style={styles.buttontext}>{button2}</Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, FlatList, Alert, TouchableOpacity } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import RatingComponent from '../../component/RatingComponent';
@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Icon as IconRneui } from '@rneui/themed';
 import { connect } from 'react-redux';
 import DividerComponent from '../../component/DividerComponent';
+import { TextNormal, TextItalic } from '../../component/TextCustom';
 
 class Products extends React.Component {
   constructor(props) {
@@ -76,7 +77,7 @@ class Products extends React.Component {
                   this.handlePressPhoBien(searchVal);
                 }}
               >
-                <Text
+                <TextNormal
                   style={{
                     color: 'rgb(57, 58, 52)',
                     fontSize: 15,
@@ -84,8 +85,10 @@ class Products extends React.Component {
                   }}
                 >
                   Phổ biến
-                </Text>
-                {this.state.orderBy === 'PHO_BIEN' ? <DividerComponent bgColor={'orange'} /> : null}
+                </TextNormal>
+                {this.state.orderBy === 'PHO_BIEN' ? (
+                  <DividerComponent bgColor={'orange'} width={'80%'} height={2} />
+                ) : null}
               </TouchableOpacity>
             </View>
             <View style={{ width: '25%', height: 32, justifyContent: 'center', alignItems: 'center' }}>
@@ -95,7 +98,7 @@ class Products extends React.Component {
                   this.handlePressMoiNhat(searchVal);
                 }}
               >
-                <Text
+                <TextNormal
                   style={{
                     color: 'rgb(57, 58, 52)',
                     fontSize: 15,
@@ -103,9 +106,11 @@ class Products extends React.Component {
                   }}
                 >
                   Mới nhất
-                </Text>
+                </TextNormal>
               </TouchableOpacity>
-              {this.state.orderBy === 'MOI_NHAT' ? <DividerComponent bgColor={'orange'} /> : null}
+              {this.state.orderBy === 'MOI_NHAT' ? (
+                <DividerComponent bgColor={'orange'} width={'80%'} height={2} />
+              ) : null}
             </View>
             <View style={{ width: '25%', height: 32, justifyContent: 'center', alignItems: 'center' }}>
               <TouchableOpacity
@@ -114,7 +119,7 @@ class Products extends React.Component {
                   this.handlePressBanChay(searchVal);
                 }}
               >
-                <Text
+                <TextNormal
                   style={{
                     color: 'rgb(57, 58, 52)',
                     fontSize: 15,
@@ -122,9 +127,11 @@ class Products extends React.Component {
                   }}
                 >
                   Bán chạy
-                </Text>
+                </TextNormal>
               </TouchableOpacity>
-              {this.state.orderBy === 'BAN_CHAY' ? <DividerComponent bgColor={'orange'} /> : null}
+              {this.state.orderBy === 'BAN_CHAY' ? (
+                <DividerComponent bgColor={'orange'} width={'80%'} height={2} />
+              ) : null}
             </View>
             <View style={{ width: '25%', height: 32, justifyContent: 'center', alignItems: 'center' }}>
               <TouchableOpacity
@@ -134,7 +141,7 @@ class Products extends React.Component {
                 }}
               >
                 <View style={{ flexDirection: 'row' }}>
-                  <Text
+                  <TextNormal
                     style={{
                       color: 'rgb(57, 58, 52)',
                       fontSize: 15,
@@ -142,14 +149,14 @@ class Products extends React.Component {
                     }}
                   >
                     Giá{' '}
-                  </Text>
+                  </TextNormal>
                   <View style={{ flexDirection: 'column' }}>
                     <Icon name="caret-up" size={10} color={!this.state.isIncrease ? 'orange' : null} />
                     <Icon name="caret-down" size={10} color={this.state.isIncrease ? 'orange' : null} />
                   </View>
                 </View>
               </TouchableOpacity>
-              {this.state.orderBy === 'GIA' ? <DividerComponent bgColor={'orange'} /> : null}
+              {this.state.orderBy === 'GIA' ? <DividerComponent bgColor={'orange'} width={'80%'} height={2} /> : null}
             </View>
           </View>
           <View>
@@ -179,7 +186,7 @@ class Products extends React.Component {
                   <View
                     style={{
                       width: '48%',
-                      height: 350,
+
                       justifyContent: 'space-around',
                       flexDirection: 'column',
                       backgroundColor: '#fff',
@@ -195,24 +202,24 @@ class Products extends React.Component {
                     >
                       <Image style={{ resizeMode: 'contain', width: '100%', height: 200 }} source={item.avatar} />
                     </TouchableOpacity>
-                    <Text>{item.title}</Text>
+                    <TextNormal>{item.title}</TextNormal>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                      <Text style={{ color: 'red' }}>
+                      <TextNormal style={{ color: 'red' }}>
                         <PriceFormat price={item.price} />
-                      </Text>
-                      <Text style={{ color: 'red', fontStyle: 'italic' }}> -{item.saleOff}</Text>
+                      </TextNormal>
+                      <TextItalic style={{ color: 'red' }}> -{item.saleOff}</TextItalic>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                       <RatingComponent rating={item.rating} />
 
-                      {/* <Text
+                      {/* <TextNormal
                         style={{
                           color: 'rgb(57, 58, 52)',
                           fontSize: 13,
                         }}
                       >
                         Thêm vào giỏ
-                      </Text> */}
+                      </TextNormal> */}
                       <IconRneui
                         name="add-shopping-cart"
                         size={20}
@@ -235,14 +242,14 @@ class Products extends React.Component {
                         this.props.handleAddBag(item, userLogin);
                       }}
                     >
-                      <Text
+                      <TextNormal
                         style={{
                           color: 'rgb(57, 58, 52)',
                           fontSize: 13,
                         }}
                       >
                         Mua ngay
-                      </Text>
+                      </TextNormal>
                     </TouchableOpacity> */}
                   </View>
                 )}
@@ -255,7 +262,7 @@ class Products extends React.Component {
                     this.handleLoadmore();
                   }}
                 >
-                  <Text>Xem thêm</Text>
+                  <TextNormal>Xem thêm</TextNormal>
                 </TouchableOpacity>
               )}
             </View>
@@ -266,7 +273,7 @@ class Products extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { products: state.products.products, userLogin: state.userLogin.userLogin };
+  return { products: state.products.products, userLogin: state.users.userLogin };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
